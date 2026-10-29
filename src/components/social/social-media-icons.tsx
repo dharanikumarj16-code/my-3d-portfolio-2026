@@ -3,16 +3,21 @@
 import { useInView } from "framer-motion";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
-import { SiGithub, SiLinkedin, SiUpwork } from "react-icons/si";
+import { SiGithub, SiUpwork } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
 import Link from "next/link";
 
 const BUTTONS = [
-  {
-    name: "Upwork",
-    href: config.social.upwork,
-    icon: <SiUpwork size={"24"} color={"#fff"} />,
-  },
+  ...(config.social.upwork
+    ? [
+        {
+          name: "Upwork",
+          href: config.social.upwork,
+          icon: <SiUpwork size={"24"} color={"#fff"} />,
+        },
+      ]
+    : []),
   {
     name: "Github",
     href: config.social.github,
@@ -21,8 +26,8 @@ const BUTTONS = [
   {
     name: "LinkedIn",
     href: config.social.linkedin,
-    icon: <SiLinkedin size={"24"} color={"#fff"} />,
-  }
+    icon: <FaLinkedin size={"24"} color={"#fff"} />,
+  },
 ];
 
 const SocialMediaButtons = () => {

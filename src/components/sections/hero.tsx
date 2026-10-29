@@ -11,7 +11,8 @@ import {
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
-import { SiGithub, SiLinkedin, SiUpwork } from "react-icons/si";
+import { SiGithub, SiUpwork } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
 
 import SectionWrapper from "../ui/section-wrapper";
@@ -76,7 +77,7 @@ const HeroSection = () => {
                       "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    A Full Stack Web Developer
+                    AI Engineer & Automation Developer
                   </p>
                 </BlurIn>
               </div>
@@ -112,11 +113,13 @@ const HeroSection = () => {
                     </TooltipContent>
                   </Tooltip>
                   <div className="flex items-center h-full gap-2">
-                    <Link href={config.social.upwork} target="_blank">
-                      <Button variant={"outline"}>
-                        <SiUpwork size={24} />
-                      </Button>
-                    </Link>
+                    {config.social.upwork && (
+                      <Link href={config.social.upwork} target="_blank">
+                        <Button variant={"outline"}>
+                          <SiUpwork size={24} />
+                        </Button>
+                      </Link>
+                    )}
                     <Link
                       href={config.social.github}
                       target="_blank"
@@ -132,7 +135,7 @@ const HeroSection = () => {
                       className="cursor-can-hover"
                     >
                       <Button variant={"outline"}>
-                        <SiLinkedin size={24} />
+                        <FaLinkedin size={24} />
                       </Button>
                     </Link>
                   </div>

@@ -10,13 +10,13 @@ const ExperienceSection = () => {
   return (
     <SectionWrapper
       id="experience"
-      className="flex flex-col items-center justify-center min-h-[120dvh] md:min-h-[320dvh] py-20"
+      className="flex flex-col items-center justify-center min-h-[100dvh] md:min-h-[180dvh] py-20"
     >
       <div className="w-full max-w-4xl px-4 md:px-8 mx-auto" id="experience">
         <SectionHeader
           id="experience"
-          title="Experience"
-          desc="My 4+ years professional journey."
+          title="Experience & Education"
+          desc="My academic and technical journey in AI & software development."
           className="mb-12 md:mb-20 mt-0"
         />
 

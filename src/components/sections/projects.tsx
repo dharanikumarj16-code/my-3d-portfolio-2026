@@ -81,7 +81,7 @@ const ProjectsSection = () => {
       <SectionHeader
         id="projects"
         title="Projects"
-        desc="Quick hits from my 69+ build lists."
+        desc="Featured AI systems, intelligent agents & automation builds."
       />
       <div
         ref={sectionRef}
@@ -111,6 +111,8 @@ type ProjectCardProps = {
 
 const imageExtensions: Record<string, string> = {
   jiniz: "jpg",
+  jarvis: "jpg",
+  autosilentpro: "jpg",
 };
 
 const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {

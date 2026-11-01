@@ -1,146 +1,157 @@
-# 3D Portfolio
+<div align="center">
 
-Welcome to my playground of pixels, keys, and scroll-triggered chaos. This portfolio mixes Spline 3D, GSAP motion, and a pile of React/Tailwind goodness to show off projects, experience, and tools—without feeling like a resume template. Dive in, poke the keyboard, spam the scroll wheel (gently), and enjoy the ride. Cookies not included, but good vibes are. If something looks broken, it might just be “experimental art.”
+# 🌌 Dharani Kumar J — 3D Developer Portfolio
 
-## 🔥 Features
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Spline 3D](https://img.shields.io/badge/Spline-3D-FF59B3?style=for-the-badge&logo=spline&logoColor=white)](https://spline.design/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)](https://www.framer.com/motion/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-Here are the loud highlights of this playground:
+<p align="center">
+  A futuristic, interactive 3D developer portfolio showcasing Artificial Intelligence, Machine Learning pipelines, and automation engineering.
+</p>
 
-- 🎹 **3D Interactive Animations**: Custom Spline keyboard; every keycap maps to a skill and pops titles/descriptions on hover.
-- ✨ **Slick Interactions & Animations**: GSAP + Framer Motion for buttery scroll pins, hover reveals, and scene transitions.
-- 🚀 **Horizontal Project Reel**: Pinned-on-scroll carousel with tilt and glow; snaps nicely on touch for mobile.
-- 🧊 **Stacking Experience Cards**: Layered timeline that sticks and stacks as you scroll—no jitter, just vibes.
-- 🌙 **Theme + Fun Overlays**: Playful toggles, Lottie “coming soon” dialog for future drops.
-- 📱 **Responsive Everywhere**: Safe-area friendly, `dvh` mindful layouts to avoid toolbar jump scares.
+[🌐 Live Demo](https://dharanikumar.vercel.app) • [💼 LinkedIn](https://linkedin.com/in/dharani-kumar-j-25ad036) • [💻 GitHub](https://github.com/dharanikumarj16-code) • [🧩 LeetCode](https://leetcode.com/u/dharanikumarj)
 
-## 🛠️ Tech Stack
+</div>
 
-- **Framework:** Next.js, TypeScript, React
-- **Styling:** Tailwind CSS, shadcn/ui
-- **Animation:** GSAP (ScrollTrigger), Framer Motion, VanillaTilt
-- **3D:** Spline (`@splinetool/runtime`, `@splinetool/react-spline`)
-- **Extras:** Lottie for playful moments
+---
 
-## Getting Started
+## 🚀 Key Highlights & Features
 
-```bash
-pnpm install
-pnpm dev
-# or
-yarn
-yarn dev
+- **🎮 Interactive 3D Cyber Avatar**: Custom 3D character avatar featuring real-time mouse-tracking perspective tilt, ambient cyber halos, and floating AI status badges across Hero, About, and Contact sections.
+- **🎹 Interactive 3D Spline Keyboard**: Custom mechanical keyboard scene where each keycap triggers authentic mechanical switch audio and reveals core engineering skills.
+- **🌌 Smooth Cinematic Transitions**: Powered by **GSAP (ScrollTrigger)** and **Framer Motion** for butter-smooth pinned scroll reveals, card stacking, and scene transitions.
+- **🛠️ Projects Showcase**: Horizontal pinned scroll carousel showcasing projects like **SmartFarm AI**, **JARVIS Voice Assistant**, and ML prediction systems.
+- **⚡ Stacking Experience Timeline**: Layered career and education cards that stack smoothly as you scroll down.
+- **📬 Responsive Contact Suite**: Connect form with instant email delivery via **Web3Forms** & direct mailto fallback.
+- **📱 100% Responsive Design**: Safe-area compliant, dynamic viewport height (`dvh`) aware, and tested on mobile, tablet, and desktop screens.
+
+---
+
+## 🛠️ Technology Stack
+
+| Category | Technologies |
+|---|---|
+| **Frontend Framework** | [Next.js 14](https://nextjs.org/) (App Router), [React 18](https://react.dev/), [TypeScript](https://www.typescriptlang.org/) |
+| **Styling & UI** | [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), Lucide Icons, React Icons |
+| **3D & Animation** | [Spline 3D](https://spline.design/), [GSAP](https://greensock.com/gsap/) (ScrollTrigger), [Framer Motion](https://www.framer.com/motion/) |
+| **Backend & Services** | Web3Forms API, EmailJS, Node.js |
+| **Deployment & DevOps**| [Vercel](https://vercel.com/), [Docker](https://www.docker.com/), GitHub Actions CI/CD |
+
+---
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18.17 or higher recommended)
+- [pnpm](https://pnpm.io/) (or `npm` / `yarn`)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dharanikumarj16-code/my-3d-portfolio-2026.git
+   cd my-3d-portfolio-2026
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   # or
+   npm install
+   ```
+
+3. **Configure Environment Variables:**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Configure your keys in `.env.local`:
+   ```env
+   NEXT_PUBLIC_WEB3FORMS_KEY=your_web3forms_key_here
+   ```
+
+4. **Run the local development server:**
+   ```bash
+   pnpm dev
+   # or
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 📁 Project Architecture
+
+```
+my-3d-portfolio-2026/
+├── public/
+│   ├── assets/
+│   │   ├── dharani-about-avatar.jpg   # 3D Avatar (balcony pose)
+│   │   ├── dharani-3d-portrait.jpg    # 3D Avatar (front portrait)
+│   │   ├── dharani-3d-avatar.png      # 3D Avatar (transparent)
+│   │   ├── skills-keyboard.spline     # Spline 3D scene file
+│   │   └── tech/                      # Technology logos
+├── src/
+│   ├── app/
+│   │   ├── about/page.tsx             # About Me page
+│   │   ├── page.tsx                   # Main Landing page
+│   │   └── layout.tsx                 # Root layout & providers
+│   ├── components/
+│   │   ├── hero-3d-profile.tsx        # 3D interactive tilt avatar
+│   │   ├── ContactForm.tsx            # Contact form component
+│   │   └── sections/                  # Hero, Skills, Experience, Projects, Contact
+│   └── data/
+│       ├── config.ts                  # Author metadata & social profiles
+│       ├── constants.ts               # Skills, experience, & navigation data
+│       └── projects.tsx               # Projects portfolio data
+├── Dockerfile                         # Multi-stage production container
+└── docker-compose.yml                 # Local Docker orchestration
 ```
 
-Then open `http://localhost:3000`.
-
-## Configuration
-
-- **Skills keyboard:** edit `src/data/constants.ts` (`SKILLS`) to change labels/blurbs. For new icons on the 3D keys, update the Spline scene (`public/assets/skills-keyboard.spline`) to match the skill names.
-- **Projects data:** `src/data/projects.tsx`
-- **Experience data:** `src/data/constants.ts` (`EXPERIENCE`)
-- **Animated background states:** `src/components/animated-background-config.ts`
-- **Footer links:** `src/components/footer/config.ts`
-
-## Assets
-
-- 3D scene: `public/assets/skills-keyboard.spline`
-- Lottie animations: `public/assets/lottie/`
-- Project screenshots: `public/assets/projects-screenshots/`
-- Tech icons: `public/assets/tech/`
-
-## Notes on Responsiveness & Motion
-
-- Horizontal projects track only pins on desktop; mobile keeps native scrolling.
-- Experience cards stack with controlled offsets to avoid jitter.
-- Safe-area + `dvh` usage minimizes mobile browser toolbar jumps.
+---
 
 ## 🌐 Deployment to Vercel
 
-This portfolio is fully optimized for one-click deployment on **[Vercel](https://vercel.com)** with PNPM and Next.js 14.
+This portfolio is optimized for one-click zero-config deployment on **[Vercel](https://vercel.com)**:
 
-### Option 1: Git Integration (Recommended)
-1. Push your repository to GitHub / GitLab / Bitbucket.
-2. Go to the [Vercel Dashboard](https://vercel.com/new) and click **"Add New..." > "Project"**.
-3. Import this repository.
-4. Vercel automatically detects Next.js and PNPM.
-5. In **Environment Variables**, add the keys from `.env.example` (such as `NEXT_PUBLIC_USER_ID`, `NEXT_PUBLIC_SERVICE_ID`, `NEXT_PUBLIC_TEMPLATE_ID`).
-6. Click **Deploy**.
-
-### Option 2: Vercel CLI
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Link and deploy
-vercel
-vercel --prod
-```
+1. Push your repository to your GitHub account (`dharanikumarj16-code/my-3d-portfolio-2026`).
+2. Go to [Vercel Dashboard](https://vercel.com/new) and click **Import**.
+3. Under **Environment Variables**, add:
+   - `NEXT_PUBLIC_WEB3FORMS_KEY` = *your Web3Forms access key*
+4. Click **Deploy**. Your site will be live with free SSL in ~60 seconds!
 
 ---
 
-## 🐳 Docker Containerization
+## 🐳 Docker Deployment
 
-A multi-stage, production-ready `Dockerfile` and `docker-compose.yml` are included.
+Run the portfolio in an isolated container environment:
 
-### Run with Docker Compose
 ```bash
-# Build and run container on http://localhost:3000
-docker compose up --build
+# Build and run with Docker Compose
+docker compose up --build -d
 
-# Run in background (detached mode)
-docker compose up -d
-
-# Stop container
+# View running container at http://localhost:3000
+# Stop the container
 docker compose down
 ```
 
-### Run with Docker CLI
-```bash
-# Build the Docker image
-docker build -t portfolio-3d .
+---
 
-# Run the container
-docker run -p 3000:3000 --env-file .env.example portfolio-3d
-```
+## 📬 Contact & Connect
+
+- **Author**: Dharani Kumar J
+- **Role**: Artificial Intelligence & Data Science Student | AI Engineer
+- **Email**: [dharanikumarj16@gmail.com](mailto:dharanikumarj16@gmail.com)
+- **LinkedIn**: [linkedin.com/in/dharani-kumar-j-25ad036](https://linkedin.com/in/dharani-kumar-j-25ad036)
+- **GitHub**: [github.com/dharanikumarj16-code](https://github.com/dharanikumarj16-code)
 
 ---
 
-## 🚀 CI/CD Pipeline (GitHub Actions)
-
-An automated workflow is configured in `.github/workflows/ci-cd.yml` which triggers on pushes and pull requests to `main`:
-
-1. **Lint & Quality Checks**: Verifies TypeScript definitions and runs ESLint.
-2. **Next.js Production Build**: Ensures production compilation succeeds without errors.
-3. **Docker Build Check**: Builds and caches the Docker image layers with Buildx.
-4. **Automated Vercel Deployment** *(Optional)*: Deploys previews for PRs and production for `main` if the following GitHub Repository Secrets are set:
-   - `VERCEL_TOKEN`
-   - `VERCEL_ORG_ID`
-   - `VERCEL_PROJECT_ID`
-
----
-
-## 🔐 Environment Variables
-
-Copy `.env.example` to `.env.local` to configure your services:
-
-```bash
-cp .env.example .env.local
-```
-
-| Variable | Description | Required |
-|---|---|:---:|
-| `NEXT_PUBLIC_USER_ID` | EmailJS Public User Key | Yes (for contact form) |
-| `NEXT_PUBLIC_SERVICE_ID` | EmailJS Service ID | Yes (for contact form) |
-| `NEXT_PUBLIC_TEMPLATE_ID` | EmailJS Template ID | Yes (for contact form) |
-| `UMAMI_DOMAIN` | Self-hosted Umami analytics script URL | Optional |
-| `UMAMI_SITE_ID` | Umami tracking site ID | Optional |
-
----
-
-## Inspiration
-
-This project is inspired by the amazing work of **Naresh Khatri**. His innovative approach to web design and attention to detail has been a huge influence. Thank you, Naresh! 🙏
-
-## Contributing & Stars
-
-If you fork this, remix it, or just vibe with it, toss a ⭐ on the repo—it keeps the electrons happy. PRs are welcome; bring snacks, tests, and well-formatted code.
+<div align="center">
+  <sub>Designed &amp; Built with ❤️ by Dharani Kumar J</sub>
+</div>

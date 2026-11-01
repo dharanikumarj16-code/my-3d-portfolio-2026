@@ -16,19 +16,20 @@ import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
 
 import SectionWrapper from "../ui/section-wrapper";
+import Hero3DProfile from "../hero-3d-profile";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
 
   return (
-    <SectionWrapper id="hero" className={cn("relative w-full h-[100dvh]")}>
-      <div className="grid md:grid-cols-2">
+    <SectionWrapper id="hero" className={cn("relative w-full min-h-[100dvh] h-auto md:h-[100dvh]")}>
+      <div className="grid grid-cols-1 md:grid-cols-2 items-center">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "h-auto md:h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
+            "pt-24 sm:pt-28 pb-6 md:p-20 lg:p-24 xl:p-28"
           )}
         >
           {!isLoading && (
@@ -150,9 +151,11 @@ const HeroSection = () => {
             </div>
           )}
         </div>
-        <div className="grid col-span-1"></div>
+        <div className="flex col-span-1 items-center justify-center p-4 lg:p-8 z-10 pb-12 md:pb-0" id="hero-profile-container">
+          {!isLoading && <Hero3DProfile />}
+        </div>
       </div>
-      <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
+      <div className="hidden md:block absolute bottom-8 left-[50%] translate-x-[-50%]">
         <ScrollDownIcon />
       </div>
     </SectionWrapper>

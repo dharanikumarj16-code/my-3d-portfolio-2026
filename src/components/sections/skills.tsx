@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { Sparkles, Terminal, Cpu, Wrench, Cloud } from "lucide-react";
+import { useSounds } from "@/hooks/use-sounds";
 
 const CATEGORIES: { label: string; value: "All" | SkillCategory; icon: React.ReactNode }[] = [
   { label: "All Skills", value: "All", icon: <Sparkles className="w-3.5 h-3.5" /> },
@@ -22,7 +23,9 @@ const SkillsSection = () => {
   const [selectedSkill, setSelectedSkill] = useState<Skill>(SKILLS[SkillNames.JS]);
   const [isPressing, setIsPressing] = useState<string | null>(null);
 
-  // Listen to 3D keyboard interactions from the Spline background
+  const { playPressSound, playReleaseSound } = useSounds();
+
+  // Listen to 3D keyboard interactions from the Spline background (if present)
   useEffect(() => {
     const handleSplineSkillSelect = (e: any) => {
       if (e.detail?.skill) {
@@ -34,17 +37,28 @@ const SkillsSection = () => {
   }, []);
 
   const handleSkillClick = (skill: Skill) => {
+    playPressSound();
     setSelectedSkill(skill);
     setIsPressing(skill.name);
-    setTimeout(() => setIsPressing(null), 300);
+    setTimeout(() => {
+      setIsPressing(null);
+      playReleaseSound();
+    }, 200);
 
-    // Dispatch custom event to trigger physical 3D keycap press and Spline screen text
+    // Dispatch custom event if any listeners are registered
     if (typeof window !== "undefined") {
       window.dispatchEvent(
         new CustomEvent("trigger-skill", {
           detail: { skillName: skill.name },
         })
       );
+    }
+  };
+
+  const handleSkillHover = (skill: Skill) => {
+    if (selectedSkill?.name !== skill.name) {
+      playPressSound();
+      setSelectedSkill(skill);
     }
   };
 
@@ -57,13 +71,13 @@ const SkillsSection = () => {
   return (
     <SectionWrapper
       id="skills"
-      className="relative w-full min-h-[100dvh] md:min-h-[140dvh] flex flex-col justify-start items-center py-20 pointer-events-auto z-10"
+      className="relative w-full min-h-[100dvh] flex flex-col justify-start items-center py-20 pointer-events-auto z-10"
     >
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto flex flex-col items-center">
         <SectionHeader
           id="skills"
           title="Tech Stack & Skills"
-          desc="Matching interactive 3D keycaps — click or hover any skill to press the matching keyboard key"
+          desc="Interactive technical skill stack — click or hover any skill to inspect full details and trigger tactile responses"
           className="mb-8"
         />
 
@@ -74,7 +88,10 @@ const SkillsSection = () => {
             return (
               <button
                 key={cat.value}
-                onClick={() => setActiveCategory(cat.value)}
+                onClick={() => {
+                  playPressSound();
+                  setActiveCategory(cat.value);
+                }}
                 className={cn(
                   "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
                   "border backdrop-blur-md cursor-pointer",
@@ -117,8 +134,9 @@ const SkillsSection = () => {
                 >
                   {selectedSkill.category}
                 </Badge>
-                <span className="text-[11px] text-muted-foreground font-mono ml-auto">
-                  Key: [{selectedSkill.name.toUpperCase()}]
+                <span className="text-[11px] text-emerald-400 font-mono ml-auto flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Active Skill
                 </span>
               </div>
               <p className="text-xs md:text-sm text-muted-foreground leading-snug">
@@ -138,10 +156,11 @@ const SkillsSection = () => {
               <button
                 key={skill.id}
                 onClick={() => handleSkillClick(skill)}
-                onMouseEnter={() => handleSkillClick(skill)}
+                onMouseEnter={() => handleSkillHover(skill)}
+                onMouseLeave={() => playReleaseSound()}
                 className={cn(
                   "group relative flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all duration-200",
-                  "backdrop-blur-md cursor-pointer select-none",
+                  "backdrop-blur-md cursor-pointer select-none active:scale-95",
                   isSelected
                     ? "border-primary bg-primary/10 shadow-lg shadow-primary/15 -translate-y-1"
                     : "border-border/60 bg-background/50 hover:bg-background/80 hover:border-border hover:-translate-y-0.5",
@@ -164,11 +183,17 @@ const SkillsSection = () => {
                     unoptimized
                   />
                 </div>
-                <span className="text-xs font-medium text-foreground line-clamp-1 w-full">
+                <span className="text-xs font-semibold text-foreground line-clamp-1 w-full">
                   {skill.label}
                 </span>
-                <span className="text-[10px] text-muted-foreground/80 font-mono mt-0.5">
-                  key: {skill.name}
+                <span className="text-[10px] text-muted-foreground/70 font-mono mt-0.5">
+                  {skill.category === "AI, ML & Data Science"
+                    ? "AI / ML"
+                    : skill.category === "Languages & Core"
+                    ? "Core"
+                    : skill.category === "Tools & Platforms"
+                    ? "Tool"
+                    : "Cloud"}
                 </span>
 
                 {isSelected && (

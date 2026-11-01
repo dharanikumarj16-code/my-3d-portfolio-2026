@@ -131,15 +131,17 @@ function Page() {
         <aside className="w-full xl:max-w-1/3 xl:col-span-1 xl:justify-self-start">
           <div className="p-5 sm:p-7 lg:p-8 rounded-2xl border border-zinc-700/70 bg-gradient-to-b from-zinc-900/70 via-black/50 to-black/30 backdrop-blur-md shadow-lg">
             <div className="flex flex-col sm:flex-row xl:flex-col items-center gap-4 sm:gap-6">
-              <div className="flex justify-center items-center w-full max-w-[180px] bg-zinc-800 rounded-xl p-4 sm:p-5">
+              <div className="relative flex justify-center items-center w-full max-w-[220px] sm:max-w-[240px] aspect-square rounded-2xl bg-slate-950/70 border border-cyan-500/30 overflow-hidden shadow-[0_0_40px_rgba(6,182,212,0.25)] group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 via-transparent to-purple-500/15 pointer-events-none z-10" />
                 <Image
-                  className="rounded-full w-[110px] sm:w-[130px] md:w-[150px] xl:w-[170px] aspect-square bg-zinc-800 shadow-inner object-cover"
-                  alt="Dharanikumar J"
-                  src="/assets/me.jpg"
-                  width={180}
-                  height={180}
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  alt="Dharanikumar J - 3D AI Developer Avatar"
+                  src="/assets/dharani-about-avatar.jpg"
+                  width={280}
+                  height={280}
                   priority
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none z-10" />
               </div>
               <div className="flex flex-col gap-2 items-center text-center sm:items-start sm:text-left xl:items-center xl:text-center">
                 <p className="text-lg sm:text-xl md:text-2xl">Dharanikumar J</p>

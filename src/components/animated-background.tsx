@@ -56,8 +56,36 @@ const AnimatedBackground = () => {
           playPressSound();
           setSelectedSkill(skill);
           selectedSkillRef.current = skill;
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(
+              new CustomEvent("spline-skill-selected", { detail: { skill } })
+            );
+          }
         }
       }
+    }
+  };
+
+  const triggerSkillByName = (keyName: string) => {
+    if (!splineApp) return;
+    const skill = SKILLS[keyName as SkillNames];
+    if (!skill) return;
+
+    if (selectedSkillRef.current) playReleaseSound();
+    playPressSound();
+    setSelectedSkill(skill);
+    selectedSkillRef.current = skill;
+    if (splineApp.getVariable("heading") && splineApp.getVariable("desc")) {
+      splineApp.setVariable("heading", skill.label);
+      splineApp.setVariable("desc", skill.shortDescription);
+    }
+
+    const keycap = splineApp.findObjectByName(skill.name);
+    if (keycap && keycap.position) {
+      gsap.killTweensOf(keycap.position);
+      gsap.timeline()
+        .to(keycap.position, { y: -30, duration: 0.1, ease: "power2.out" })
+        .to(keycap.position, { y: 0, duration: 0.3, ease: "elastic.out(1, 0.4)" });
     }
   };
 
@@ -89,6 +117,11 @@ const AnimatedBackground = () => {
         selectedSkillRef.current = skill;
         splineApp.setVariable("heading", skill.label);
         splineApp.setVariable("desc", skill.shortDescription);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(
+            new CustomEvent("spline-skill-selected", { detail: { skill } })
+          );
+        }
       }
     });
     splineApp.addEventListener("mouseHover", handleMouseHover);
@@ -332,6 +365,16 @@ const AnimatedBackground = () => {
     splineApp.setVariable("desc", selectedSkill.shortDescription);
   }, [selectedSkill]);
 
+  useEffect(() => {
+    const handleCustomTrigger = (e: any) => {
+      if (e.detail?.skillName) {
+        triggerSkillByName(e.detail.skillName);
+      }
+    };
+    window.addEventListener("trigger-skill", handleCustomTrigger);
+    return () => window.removeEventListener("trigger-skill", handleCustomTrigger);
+  }, [splineApp]);
+
   // Handle rotation and teardown animations based on active section
   useEffect(() => {
     if (!splineApp) return;
@@ -431,6 +474,9 @@ const AnimatedBackground = () => {
         className="w-full h-full fixed"
         ref={splineContainer}
         onLoad={(app: Application) => {
+          if (typeof window !== "undefined") {
+            (window as any).__splineApp = app;
+          }
           setSplineApp(app);
           bypassLoading();
         }}

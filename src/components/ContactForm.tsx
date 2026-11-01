@@ -9,9 +9,7 @@ import { useToast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
-const EMAILJS_USER_ID = process.env.NEXT_PUBLIC_USER_ID;
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_SERVICE_ID;
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+import { config } from "@/data/config";
 
 const ContactForm = () => {
   const [fullName, setFullName] = React.useState("");
@@ -26,60 +24,116 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!EMAILJS_USER_ID || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
-      toast({
-        title: "Configuration error",
-        description: "Email service is not configured correctly.",
-        variant: "destructive",
-        className: cn("top-0 mx-auto fixed"),
-      });
-      setLoading(false);
-      return;
+    const web3formsKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    const emailjsUserId = process.env.NEXT_PUBLIC_USER_ID;
+    const emailjsServiceId = process.env.NEXT_PUBLIC_SERVICE_ID;
+    const emailjsTemplateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+    // 1. Try Web3Forms (Recommended - free & instant delivery to dharanikumarj16@gmail.com)
+    if (web3formsKey) {
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3formsKey,
+            name: fullName,
+            email: email,
+            message: message,
+            subject: `Portfolio Inquiry from ${fullName}`,
+            from_name: `${fullName} (Portfolio)`,
+          }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          toast({
+            title: "Message Sent Successfully! ✨",
+            description: "Thank you! I will get back to you as soon as possible.",
+            variant: "default",
+            className: cn("top-0 mx-auto fixed"),
+          });
+          setFullName("");
+          setEmail("");
+          setMessage("");
+          setLoading(false);
+          return;
+        } else {
+          throw new Error(data.message || "Submission failed");
+        }
+      } catch (err) {
+        console.warn("Web3Forms submission error, falling back to direct email:", err);
+      }
     }
 
-    try {
-      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          service_id: EMAILJS_SERVICE_ID,
-          template_id: EMAILJS_TEMPLATE_ID,
-          user_id: EMAILJS_USER_ID,
-          template_params: {
-            from_name: fullName,
-            reply_to: email,
-            message,
-          },
-        }),
-      });
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(errText || "Failed to send message");
+    // 2. Try EmailJS (if configured)
+    if (emailjsUserId && emailjsServiceId && emailjsTemplateId) {
+      try {
+        const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            service_id: emailjsServiceId,
+            template_id: emailjsTemplateId,
+            user_id: emailjsUserId,
+            template_params: {
+              from_name: fullName,
+              reply_to: email,
+              message,
+            },
+          }),
+        });
+
+        if (res.ok) {
+          toast({
+            title: "Message Sent! ✨",
+            description: "I'll get back to you as soon as possible.",
+            variant: "default",
+            className: cn("top-0 mx-auto fixed"),
+          });
+          setFullName("");
+          setEmail("");
+          setMessage("");
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.warn("EmailJS submission error:", err);
       }
+    }
+
+    // 3. Fallback: Direct Mailto Dispatch to dharanikumarj16@gmail.com
+    try {
+      const subject = encodeURIComponent(`Portfolio Message from ${fullName}`);
+      const body = encodeURIComponent(
+        `Hi Dharani,\n\n${message}\n\n---\nSender: ${fullName}\nEmail: ${email}`
+      );
+      window.location.href = `mailto:${config.email}?subject=${subject}&body=${body}`;
+
       toast({
-        title: "Thank you!",
-        description: "I'll get back to you as soon as possible.",
+        title: "Opening your email client... ✉️",
+        description: `Direct message drafted to ${config.email}`,
         variant: "default",
         className: cn("top-0 mx-auto fixed"),
       });
-      setLoading(false);
+
       setFullName("");
       setEmail("");
       setMessage("");
-      const timer = setTimeout(() => {
-        router.push("/");
-        clearTimeout(timer);
-      }, 1000);
-    } catch (err) {
+    } catch {
       toast({
         title: "Error",
-        description: "Something went wrong! Please check the fields.",
-        className: cn(
-          "top-0 w-full mx-auto"
-        ),
+        description: "Could not open email client. Please email directly at " + config.email,
         variant: "destructive",
+        className: cn("top-0 mx-auto fixed"),
       });
     }
+
     setLoading(false);
   };
   return (

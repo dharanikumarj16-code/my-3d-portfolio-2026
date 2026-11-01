@@ -1,3 +1,5 @@
+"use client";
+
 import Preloader from "./preloader";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./ui/toaster";

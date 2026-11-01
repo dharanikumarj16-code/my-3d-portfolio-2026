@@ -54,6 +54,89 @@ Then open `http://localhost:3000`.
 - Experience cards stack with controlled offsets to avoid jitter.
 - Safe-area + `dvh` usage minimizes mobile browser toolbar jumps.
 
+## 🌐 Deployment to Vercel
+
+This portfolio is fully optimized for one-click deployment on **[Vercel](https://vercel.com)** with PNPM and Next.js 14.
+
+### Option 1: Git Integration (Recommended)
+1. Push your repository to GitHub / GitLab / Bitbucket.
+2. Go to the [Vercel Dashboard](https://vercel.com/new) and click **"Add New..." > "Project"**.
+3. Import this repository.
+4. Vercel automatically detects Next.js and PNPM.
+5. In **Environment Variables**, add the keys from `.env.example` (such as `NEXT_PUBLIC_USER_ID`, `NEXT_PUBLIC_SERVICE_ID`, `NEXT_PUBLIC_TEMPLATE_ID`).
+6. Click **Deploy**.
+
+### Option 2: Vercel CLI
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Link and deploy
+vercel
+vercel --prod
+```
+
+---
+
+## 🐳 Docker Containerization
+
+A multi-stage, production-ready `Dockerfile` and `docker-compose.yml` are included.
+
+### Run with Docker Compose
+```bash
+# Build and run container on http://localhost:3000
+docker compose up --build
+
+# Run in background (detached mode)
+docker compose up -d
+
+# Stop container
+docker compose down
+```
+
+### Run with Docker CLI
+```bash
+# Build the Docker image
+docker build -t portfolio-3d .
+
+# Run the container
+docker run -p 3000:3000 --env-file .env.example portfolio-3d
+```
+
+---
+
+## 🚀 CI/CD Pipeline (GitHub Actions)
+
+An automated workflow is configured in `.github/workflows/ci-cd.yml` which triggers on pushes and pull requests to `main`:
+
+1. **Lint & Quality Checks**: Verifies TypeScript definitions and runs ESLint.
+2. **Next.js Production Build**: Ensures production compilation succeeds without errors.
+3. **Docker Build Check**: Builds and caches the Docker image layers with Buildx.
+4. **Automated Vercel Deployment** *(Optional)*: Deploys previews for PRs and production for `main` if the following GitHub Repository Secrets are set:
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_PROJECT_ID`
+
+---
+
+## 🔐 Environment Variables
+
+Copy `.env.example` to `.env.local` to configure your services:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Description | Required |
+|---|---|:---:|
+| `NEXT_PUBLIC_USER_ID` | EmailJS Public User Key | Yes (for contact form) |
+| `NEXT_PUBLIC_SERVICE_ID` | EmailJS Service ID | Yes (for contact form) |
+| `NEXT_PUBLIC_TEMPLATE_ID` | EmailJS Template ID | Yes (for contact form) |
+| `UMAMI_DOMAIN` | Self-hosted Umami analytics script URL | Optional |
+| `UMAMI_SITE_ID` | Umami tracking site ID | Optional |
+
+---
+
 ## Inspiration
 
 This project is inspired by the amazing work of **Naresh Khatri**. His innovative approach to web design and attention to detail has been a huge influence. Thank you, Naresh! 🙏

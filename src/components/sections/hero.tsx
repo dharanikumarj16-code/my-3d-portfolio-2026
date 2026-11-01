@@ -11,7 +11,7 @@ import {
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
-import { SiGithub, SiUpwork } from "react-icons/si";
+import { SiGithub, SiUpwork, SiLeetcode } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
 
@@ -59,14 +59,14 @@ const HeroSection = () => {
                         {config.author.split(" ")[0]}
                         <span className="md:hidden"> </span>
                         <br className="hidden md:block" />
-                        {config.author.split(" ")[1]}
+                        {config.author.split(" ").slice(1).join(" ")}
                       </h1>
                     </TooltipTrigger>
                     <TooltipContent
                       side="top"
                       className="dark:bg-white dark:text-black"
                     >
-                      theres something waiting for you in devtools
+                      Artificial Intelligence & Data Science Student
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
@@ -77,22 +77,21 @@ const HeroSection = () => {
                       "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    AI Engineer & Automation Developer
+                    Artificial Intelligence & Data Science Student
                   </p>
                 </BlurIn>
               </div>
               <div className="mt-6 flex flex-col gap-3 w-fit">
                 <Link
-                  href={
-                    "https://drive.google.com/file/d/184CT9elgsqE8nYGlfE0frH-N76Vsg3Yy/view?usp=sharing"
-                  }
+                  href="/assets/dharani-kumar-j-resume.pdf"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-1"
                 >
                   <BoxReveal delay={2} width="100%">
-                    <Button className="flex items-center gap-2 w-full">
-                      <File size={24} />
-                      <p>Resume</p>
+                    <Button className="flex items-center gap-2 w-full shadow-md">
+                      <File size={22} />
+                      <p>View / Download Resume</p>
                     </Button>
                   </BoxReveal>
                 </Link>
@@ -109,35 +108,42 @@ const HeroSection = () => {
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent side="bottom">
-                      <p>Yes, you can do it. 🥹 🙏</p>
+                      <p>Get in touch with Dharani Kumar J</p>
                     </TooltipContent>
                   </Tooltip>
                   <div className="flex items-center h-full gap-2">
-                    {config.social.upwork && (
-                      <Link href={config.social.upwork} target="_blank">
-                        <Button variant={"outline"}>
-                          <SiUpwork size={24} />
-                        </Button>
-                      </Link>
-                    )}
                     <Link
                       href={config.social.github}
                       target="_blank"
                       className="cursor-can-hover"
+                      title="GitHub"
                     >
-                      <Button variant={"outline"}>
-                        <SiGithub size={24} />
+                      <Button variant={"outline"} size="icon">
+                        <SiGithub size={20} />
                       </Button>
                     </Link>
                     <Link
                       href={config.social.linkedin}
                       target="_blank"
                       className="cursor-can-hover"
+                      title="LinkedIn"
                     >
-                      <Button variant={"outline"}>
-                        <FaLinkedin size={24} />
+                      <Button variant={"outline"} size="icon">
+                        <FaLinkedin size={20} />
                       </Button>
                     </Link>
+                    {config.social.leetcode && (
+                      <Link
+                        href={config.social.leetcode}
+                        target="_blank"
+                        className="cursor-can-hover"
+                        title="LeetCode"
+                      >
+                        <Button variant={"outline"} size="icon">
+                          <SiLeetcode size={20} className="text-[#FFA116]" />
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

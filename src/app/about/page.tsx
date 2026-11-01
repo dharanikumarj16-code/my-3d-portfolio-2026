@@ -49,13 +49,13 @@ import { config } from "@/data/config";
 const CONTACT_LINKS = [
   {
     name: "Email",
-    content: "dharanikumarj26@gmail.com",
-    href: "mailto:dharanikumarj26@gmail.com",
+    content: "dharanikumarj16@gmail.com",
+    href: "mailto:dharanikumarj16@gmail.com",
     icon: <FaEnvelope />,
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/dharani-kumar-j-25ad036",
+    href: "https://linkedin.com/in/dharani-kumar-j-25ad036",
     content: "/dharani-kumar-j-25ad036",
     icon: <FaLinkedin />,
   },
@@ -65,6 +65,12 @@ const CONTACT_LINKS = [
     content: "/dharanikumarj16-code",
     icon: <FaGithub />,
   },
+  {
+    name: "LeetCode",
+    href: "https://leetcode.com/u/dharanikumarj",
+    content: "/u/dharanikumarj",
+    icon: <TbTerminal2 />,
+  },
 ];
 
 const TOOLS = [
@@ -72,20 +78,20 @@ const TOOLS = [
   { name: "C++", content: "High-performance programming & DSA.", icon: <SiCplusplus size={50} color="#00599C" /> },
   { name: "Java", content: "Robust OOP and application foundations.", icon: <FaJava size={50} color="#ED8B00" /> },
   { name: "SQL", content: "Relational querying & database architecture.", icon: <SiPostgresql size={50} color="#336791" /> },
-  { name: "FastAPI", content: "Lightning-fast modern Python backend APIs.", icon: <SiFastapi size={50} color="#009688" /> },
-  { name: "LLMs / AI", content: "Prompt engineering, agents & intelligent workflows.", icon: <FaBrain size={50} color="#10A37F" /> },
-  { name: "NumPy", content: "High-performance multidimensional array computing.", icon: <SiNumpy size={50} color="#013243" /> },
+  { name: "Scikit-Learn", content: "KNN, predictive pipelines & machine learning.", icon: <FaBrain size={50} color="#F7931E" /> },
   { name: "Pandas", content: "Data wrangling, cleaning & structured analytics.", icon: <SiPandas size={50} color="#150458" /> },
-  { name: "Jupyter", content: "Interactive computational experimentation.", icon: <SiJupyter size={50} color="#F37626" /> },
+  { name: "NumPy", content: "High-performance multidimensional array computing.", icon: <SiNumpy size={50} color="#013243" /> },
+  { name: "Seaborn", content: "Statistical visualization & scientific plotting.", icon: <FaBrain size={50} color="#4C72B0" /> },
+  { name: "LeetCode / DSA", content: "Data structures, graph algorithms & problem solving.", icon: <TbTerminal2 size={50} color="#FFA116" /> },
   { name: "Google Colab", content: "Cloud GPU-accelerated model training.", icon: <SiGooglecolab size={50} color="#F9AB00" /> },
   { name: "Docker", content: "Containerization & dev environment parity.", icon: <FaDocker size={50} color="#2496ed" /> },
   { name: "Linux", content: "Terminal-first development operating system.", icon: <FaLinux size={50} color="#fff" /> },
   { name: "Git", content: "Distributed version control without regrets.", icon: <FaGit size={50} color="#f05032" /> },
   { name: "GitHub", content: "Collaborative open source & CI/CD workflows.", icon: <FaGithub size={50} color="#fff" /> },
   { name: "VS Code", content: "Primary editor workflow & customized extensions.", icon: <SiVscodium size={50} color="#007acc" /> },
-  { name: "Android Studio", content: "Native mobile development environment.", icon: <SiAndroidstudio size={50} color="#3DDC84" /> },
-  { name: "Vercel", content: "Serverless web deployment & edge networks.", icon: <SiVercel size={50} color="#fff" /> },
-  { name: "Render", content: "Cloud hosting for microservices & background jobs.", icon: <SiRender size={50} color="#46E3B7" /> },
+  { name: "Android Studio", content: "Location-aware mobile application development.", icon: <SiAndroidstudio size={50} color="#3DDC84" /> },
+  { name: "Render", content: "Cloud hosting for SmartFarm AI & ML models.", icon: <SiRender size={50} color="#46E3B7" /> },
+  { name: "CI/CD", content: "Continuous deployment & GitHub Actions workflows.", icon: <SiVercel size={50} color="#fff" /> },
 ];
 
 function Page() {

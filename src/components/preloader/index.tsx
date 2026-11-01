@@ -50,6 +50,10 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
   };
   const loadingPercentRef = useRef<{ value: number }>({ value: 0 });
   useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, (LOADING_TIME * 1000) + 300);
+
     loadingTween.current = gsap.to(loadingPercentRef.current, {
       value: 100,
       duration: LOADING_TIME,
@@ -59,10 +63,13 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
       },
       onComplete: () => {
         setIsLoading(false);
-        // observe: this change has not been observed for errors.
-        // window.scrollTo(0, 0);
       },
     });
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      loadingTween.current?.kill();
+    };
   }, []);
 
   return (

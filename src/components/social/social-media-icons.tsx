@@ -3,7 +3,7 @@
 import { useInView } from "framer-motion";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
-import { SiGithub, SiUpwork } from "react-icons/si";
+import { SiGithub, SiUpwork, SiLeetcode } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { config } from "@/data/config";
 import Link from "next/link";
@@ -28,6 +28,15 @@ const BUTTONS = [
     href: config.social.linkedin,
     icon: <FaLinkedin size={"24"} color={"#fff"} />,
   },
+  ...(config.social.leetcode
+    ? [
+        {
+          name: "LeetCode",
+          href: config.social.leetcode,
+          icon: <SiLeetcode size={"24"} color={"#FFA116"} />,
+        },
+      ]
+    : []),
 ];
 
 const SocialMediaButtons = () => {

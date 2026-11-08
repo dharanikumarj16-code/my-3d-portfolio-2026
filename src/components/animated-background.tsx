@@ -5,7 +5,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const Spline = React.lazy(() => import("@splinetool/react-spline"));
 import { Skill, SkillNames, SKILLS } from "@/data/constants";
-import { sleep } from "@/lib/utils";
+import { sleep, cn } from "@/lib/utils";
+import { tuneExistingRenderer } from "@/lib/webgl/device-optimizer";
+import { configureMobileTouchControls } from "@/lib/webgl/touch-controller";
+import { teardownWebGLInstance } from "@/lib/webgl/cleanup";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
 import { useTheme } from "next-themes";
@@ -468,20 +471,63 @@ const AnimatedBackground = () => {
     updateKeyboardTransform();
   }, [splineApp, isLoading, activeSection]);
 
+  // Teardown and GPU memory cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (splineApp) {
+        try {
+          const renderer = (splineApp as any)._renderer;
+          const scene = (splineApp as any)._scene;
+          if (renderer && scene) {
+            teardownWebGLInstance(renderer, scene);
+          }
+          splineApp.dispose();
+        } catch (err) {
+          console.warn("Spline teardown warning:", err);
+        }
+      }
+    };
+  }, [splineApp]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Spline
-        className="w-full h-full fixed"
-        ref={splineContainer}
-        onLoad={(app: Application) => {
-          if (typeof window !== "undefined") {
-            (window as any).__splineApp = app;
-          }
-          setSplineApp(app);
-          bypassLoading();
-        }}
-        scene="/assets/skills-keyboard.spline"
-      />
+      <div
+        className={cn(
+          "w-full h-full fixed inset-0 z-0",
+          isMobile && "pointer-events-none"
+        )}
+        style={{ touchAction: "pan-y" }}
+      >
+        <Spline
+          className="w-full h-full"
+          ref={splineContainer}
+          onLoad={(app: Application) => {
+            if (typeof window !== "undefined") {
+              (window as any).__splineApp = app;
+            }
+
+            // WebGL & Mobile Performance Optimization
+            try {
+              const renderer = (app as any)._renderer;
+              if (renderer) {
+                tuneExistingRenderer(renderer);
+              }
+              const canvas =
+                (app as any)._canvas ||
+                splineContainer.current?.querySelector("canvas");
+              if (canvas) {
+                configureMobileTouchControls(canvas as HTMLCanvasElement);
+              }
+            } catch (err) {
+              console.warn("WebGL optimization setup warning:", err);
+            }
+
+            setSplineApp(app);
+            bypassLoading();
+          }}
+          scene="/assets/skills-keyboard.spline"
+        />
+      </div>
     </Suspense>
   );
 };

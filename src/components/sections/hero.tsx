@@ -21,6 +21,7 @@ const HeroSection = () => {
   const [profileData, setProfileData] = useState({
     role: config.role,
     bio: config.description.short,
+    avatar_url: "/assets/dharani-3d-portrait.jpg",
   });
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const HeroSection = () => {
       .then((p) => {
         if (p?.resume_url) setResumeUrl(p.resume_url);
         if (p?.role) setProfileData((prev) => ({ ...prev, role: p.role }));
+        if (p?.avatar_url) setProfileData((prev) => ({ ...prev, avatar_url: p.avatar_url || prev.avatar_url }));
       })
       .catch(() => { });
   }, []);
@@ -176,9 +178,13 @@ const HeroSection = () => {
           )}
         </div>
 
-        {/* Right Column: Interactive 3D Card Profile */}
+        {/* Right Column: Interactive 3D Card Profile with 3D Neural Lines */}
         <div className="lg:col-span-5 flex items-center justify-center z-10">
-          {!isLoading && <Hero3DProfile />}
+          {!isLoading && (
+            <Hero3DProfile
+              imageUrl={profileData.avatar_url || "/assets/dharani-3d-portrait.jpg"}
+            />
+          )}
         </div>
       </div>
 

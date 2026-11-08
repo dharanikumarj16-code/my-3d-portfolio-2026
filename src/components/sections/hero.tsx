@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { File, Github, Linkedin } from "lucide-react";
+import { getProfile } from "@/lib/supabase/data-service";
 import {
   Tooltip,
   TooltipContent,
@@ -20,6 +21,15 @@ import Hero3DProfile from "../hero-3d-profile";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
+  const [resumeUrl, setResumeUrl] = useState(config.resumeUrl || "/assets/dharani-kumar-j-resume.pdf");
+
+  useEffect(() => {
+    getProfile()
+      .then((p) => {
+        if (p?.resume_url) setResumeUrl(p.resume_url);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <SectionWrapper id="hero" className={cn("relative w-full min-h-[100dvh] h-auto md:h-[100dvh]")}>
@@ -84,7 +94,7 @@ const HeroSection = () => {
               </div>
               <div className="mt-6 flex flex-col gap-3 w-fit">
                 <Link
-                  href="/assets/dharani-kumar-j-resume.pdf"
+                  href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Download, ExternalLink, Mail, Phone, MapPin, Globe } from "lucide-react";
 import { SiGithub, SiLinkedin, SiLeetcode } from "react-icons/si";
 import { config } from "@/data/config";
+import { getProfile } from "@/lib/supabase/data-service";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
   description: "Official resume of Dharani Kumar J - Artificial Intelligence & Data Science Student.",
 };
 
-export default function ResumePage() {
+export default async function ResumePage() {
+  const profile = await getProfile();
+  const resumeUrl = profile.resume_url || "/assets/dharani-kumar-j-resume.pdf";
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -25,7 +29,7 @@ export default function ResumePage() {
           </Link>
           <div className="flex items-center gap-3">
             <a
-              href="/assets/dharani-kumar-j-resume.pdf"
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
@@ -34,7 +38,7 @@ export default function ResumePage() {
               Open PDF
             </a>
             <a
-              href="/assets/dharani-kumar-j-resume.pdf"
+              href={resumeUrl}
               download="Dharani_Kumar_J_Resume.pdf"
               className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:opacity-90 shadow-lg shadow-primary/20 transition-all"
             >

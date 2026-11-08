@@ -101,7 +101,7 @@ const SkillsSection: React.FC = () => {
                   setActiveCategory(cat.value);
                 }}
                 className={cn(
-                  "flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200",
+                  "flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-body font-semibold whitespace-nowrap transition-all duration-200",
                   "border cursor-pointer select-none",
                   "shadow-[0_4px_12px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.15)]",
                   "active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.7)]",
@@ -155,21 +155,21 @@ const SkillsSection: React.FC = () => {
                 </div>
                 <div className="flex-1 min-w-0" style={{ transform: "translateZ(10px)" }}>
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <h3 className="text-lg md:text-xl font-bold tracking-tight text-white">
+                    <h3 className="text-card-heading font-heading font-semibold tracking-[-0.01em] text-white">
                       {selectedSkill.label}
                     </h3>
                     <Badge
                       variant="outline"
-                      className="text-[10px] uppercase font-mono px-2.5 py-0.5 border-cyan-500/40 text-cyan-300 bg-cyan-950/60 shadow-sm"
+                      className="text-[11px] uppercase font-mono font-medium tracking-[0.02em] px-2.5 py-0.5 border-cyan-500/40 text-cyan-300 bg-cyan-950/60 shadow-sm"
                     >
                       {selectedSkill.category}
                     </Badge>
-                    <span className="text-[11px] text-cyan-400 font-mono ml-auto flex items-center gap-1.5">
+                    <span className="text-[11px] text-cyan-400 font-mono tracking-[0.02em] ml-auto flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shadow-[0_0_8px_#22d3ee]" />
                       Orbital Focus
                     </span>
                   </div>
-                  <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-body text-slate-300/85 leading-relaxed max-w-[65ch]">
                     {selectedSkill.shortDescription}
                   </p>
                 </div>

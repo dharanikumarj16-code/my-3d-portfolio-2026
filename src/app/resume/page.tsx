@@ -52,15 +52,15 @@ export default async function ResumePage() {
         <div className="bg-slate-900/90 border border-t-white/10 border-x-slate-800 border-b-black/80 rounded-3xl p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.6)] space-y-8">
           {/* Header */}
           <div className="border-b border-zinc-800 pb-6">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white uppercase mb-1">
+            <h1 className="text-3xl sm:text-4xl font-heading font-bold tracking-tight text-white uppercase mb-1">
               DHARANI KUMAR J
             </h1>
-            <p className="text-base sm:text-lg font-semibold text-primary tracking-wide uppercase mb-3">
+            <p className="text-sm sm:text-base font-body font-medium text-cyan-400 tracking-wider uppercase mb-3">
               ARTIFICIAL INTELLIGENCE & DATA SCIENCE STUDENT
             </p>
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-zinc-400">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm font-body text-zinc-400">
               <span className="flex items-center gap-1.5">
-                <MapPin size={14} className="text-primary" />
+                <MapPin size={14} className="text-cyan-400" />
                 Villupuram, Tamil Nadu, India 605402
               </span>
               <span>•</span>
@@ -68,26 +68,26 @@ export default async function ResumePage() {
                 href="tel:+917695992514"
                 className="flex items-center gap-1.5 hover:text-white transition-colors"
               >
-                <Phone size={14} className="text-primary" />
-                +91 7695992514
+                <Phone size={14} className="text-cyan-400" />
+                <span className="font-mono tabular-nums">+91 7695992514</span>
               </a>
               <span>•</span>
               <a
                 href="mailto:dharanikumarj16@gmail.com"
                 className="flex items-center gap-1.5 hover:text-white transition-colors"
               >
-                <Mail size={14} className="text-primary" />
+                <Mail size={14} className="text-cyan-400" />
                 dharanikumarj16@gmail.com
               </a>
             </div>
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-zinc-400 mt-2">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm font-mono text-zinc-400 mt-2">
               <a
                 href="https://github.com/dharanikumarj16-code"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-1.5 hover:text-white transition-colors"
               >
-                <SiGithub size={14} className="text-primary" />
+                <SiGithub size={14} className="text-cyan-400" />
                 github.com/dharanikumarj16-code
               </a>
               <span>•</span>
@@ -107,7 +107,7 @@ export default async function ResumePage() {
                 rel="noreferrer"
                 className="flex items-center gap-1.5 hover:text-white transition-colors"
               >
-                <SiLinkedin size={14} className="text-primary" />
+                <SiLinkedin size={14} className="text-cyan-400" />
                 linkedin.com/in/dharani-kumar-j-25ad036
               </a>
             </div>
@@ -115,20 +115,20 @@ export default async function ResumePage() {
 
           {/* Professional Summary */}
           <div>
-            <h2 className="text-sm font-bold tracking-wider uppercase text-primary mb-2">
+            <h2 className="text-xs font-mono font-semibold tracking-[0.05em] uppercase text-cyan-400 mb-2">
               PROFESSIONAL SUMMARY
             </h2>
-            <p className="text-sm leading-relaxed text-zinc-300">
+            <p className="text-sm font-body leading-relaxed text-zinc-300 max-w-[65ch]">
               Results-oriented Artificial Intelligence and Data Science student skilled in Python, Machine Learning, Data Structures, and Natural Language Processing. Experienced in developing end-to-end predictive pipelines, voice-controlled automated systems, and web-deployed ML engines to address real-world challenges.
             </p>
           </div>
 
           {/* Technical Profile */}
           <div>
-            <h2 className="text-sm font-bold tracking-wider uppercase text-primary mb-3">
+            <h2 className="text-xs font-mono font-semibold tracking-[0.05em] uppercase text-cyan-400 mb-3">
               TECHNICAL PROFILE
             </h2>
-            <div className="space-y-2 text-sm text-zinc-300">
+            <div className="space-y-2 text-sm font-body text-zinc-300">
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-1">
                 <span className="font-semibold text-white">Languages & Frameworks:</span>
                 <span className="sm:col-span-3 text-zinc-300">Python, C++, Java, SQL, Data Structures & Algorithms (DSA), OOP</span>

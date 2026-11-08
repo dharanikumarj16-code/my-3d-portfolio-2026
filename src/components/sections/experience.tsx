@@ -91,16 +91,16 @@ const ExperienceSection = () => {
                   style={{ transform: "translateZ(8px)" }}
                 >
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-card-heading font-heading font-semibold text-white tracking-[-0.01em] group-hover:text-cyan-300 transition-colors text-balance">
                       {roleTitle}
                     </h3>
-                    <div className="flex items-center gap-2 mt-1 text-xs sm:text-sm font-medium text-slate-300">
+                    <div className="flex items-center gap-2 mt-1 text-xs sm:text-sm font-body font-medium text-slate-300">
                       <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                       <span>{exp.company}</span>
                     </div>
                   </div>
 
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700/80 text-xs font-mono text-cyan-300 self-start sm:self-auto shrink-0 shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)]">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700/80 text-xs font-mono tabular-nums text-cyan-300 tracking-[0.02em] self-start sm:self-auto shrink-0 shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)]">
                     <Calendar className="w-3 h-3 text-cyan-400" />
                     <span>{periodText}</span>
                   </span>
@@ -115,7 +115,7 @@ const ExperienceSection = () => {
                       <li
                         key={dIdx}
                         className={cn(
-                          "flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed",
+                          "flex items-start gap-2.5 text-xs sm:text-sm font-body text-slate-300/85 leading-relaxed max-w-[65ch]",
                           isCertLine &&
                           "p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-cyan-200 mt-3 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]"
                         )}
@@ -137,7 +137,7 @@ const ExperienceSection = () => {
                     className="mt-6 pt-5 border-t border-slate-800/60 flex flex-wrap items-center gap-2"
                     style={{ transform: "translateZ(6px)" }}
                   >
-                    <span className="text-[11px] font-mono text-slate-400 mr-1">Skills:</span>
+                    <span className="text-[11px] font-mono tracking-[0.02em] text-slate-400 mr-1">Skills:</span>
                     {exp.skills.map((skillName: string) => {
                       const skill = SKILLS[skillName as SkillNames];
                       if (!skill) return null;
@@ -145,7 +145,7 @@ const ExperienceSection = () => {
                       return (
                         <span
                           key={skillName}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-[11px] font-mono text-slate-200 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-0.5"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/80 text-[11px] font-mono font-medium tracking-[0.02em] text-slate-200 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-0.5"
                         >
                           <img
                             src={skill.icon}

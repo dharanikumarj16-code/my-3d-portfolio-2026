@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Archivo_Black } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { config } from "@/data/config";
 import { Analytics } from "@vercel/analytics/next"
@@ -57,15 +57,25 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["600", "700"],
+  variable: "--font-heading",
+  display: "swap",
 });
 
-const archivoBlack = Archivo_Black({
+const inter = Inter({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-display",
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -76,7 +86,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={[inter.variable, archivoBlack.variable, "font-sans", "scroll-smooth"].join(" ")}
+      className={[
+        spaceGrotesk.variable,
+        inter.variable,
+        jetbrainsMono.variable,
+        "font-body",
+        "scroll-smooth",
+      ].join(" ")}
+      style={
+        {
+          "--font-sans": "var(--font-body)",
+        } as React.CSSProperties
+      }
       suppressHydrationWarning
     >
       <head>
@@ -109,7 +130,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </head>
-      <body className="font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+      <body className="font-body antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
         <Providers>
           <Header />
           {children}

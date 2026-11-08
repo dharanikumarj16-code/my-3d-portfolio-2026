@@ -46,7 +46,7 @@ const HeroSection = () => {
             <>
               {/* Availability Status Pill with 3D physical depth */}
               <BlurIn delay={0.3}>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-t-white/20 border-x-slate-800 border-b-black/80 bg-slate-900/90 backdrop-blur-md text-cyan-300 text-xs font-mono mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.5)]">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-t-white/20 border-x-slate-800 border-b-black/80 bg-slate-900/90 backdrop-blur-md text-cyan-300 text-xs font-mono font-medium tracking-[0.02em] mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.5)]">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
@@ -57,7 +57,7 @@ const HeroSection = () => {
 
               {/* Main Headline */}
               <BlurIn delay={0.5}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+                <h1 className="text-hero font-heading font-bold tracking-[-0.02em] text-white leading-[1.1] text-balance">
                   Hi, I&apos;m{" "}
                   <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
                     {config.fullName}
@@ -65,16 +65,16 @@ const HeroSection = () => {
                 </h1>
               </BlurIn>
 
-              {/* Specialization Role */}
+              {/* Specialization Role (Hero Subtitle) */}
               <BlurIn delay={0.7}>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-slate-200 mt-3 tracking-tight">
+                <p className="text-hero-sub font-body font-medium text-slate-200 mt-3 max-w-[60ch] leading-[1.4] text-balance">
                   {profileData.role}
-                </h2>
+                </p>
               </BlurIn>
 
               {/* Punchy Bio Description */}
               <BlurIn delay={0.9}>
-                <p className="mt-4 text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl leading-relaxed">
+                <p className="mt-4 text-body-fluid font-body font-normal text-slate-300/85 max-w-[65ch] leading-[1.6] text-pretty">
                   Crafting end-to-end predictive machine learning pipelines, low-latency intelligent voice agents, and cloud-deployed software systems that transform complex data into actionable impact.
                 </p>
               </BlurIn>
@@ -82,15 +82,15 @@ const HeroSection = () => {
               {/* Credential / Highlight 3D Badges */}
               <BlurIn delay={1.1}>
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mt-6">
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono font-medium tracking-[0.02em] text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
                     <span>SKCET • B.Tech AI &amp; DS</span>
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono font-medium tracking-[0.02em] text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <Terminal className="w-3.5 h-3.5 text-teal-400" />
                     <span>ML Pipelines &amp; NLP</span>
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono font-medium tracking-[0.02em] text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <Code2 className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Python • C++ • Cloud</span>
                   </div>
@@ -102,7 +102,7 @@ const HeroSection = () => {
                 {/* Primary CTA: Explore Projects */}
                 <Link
                   href="#projects"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(6,182,212,0.35),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-3px_0_rgba(0,0,0,0.3)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-body font-semibold text-sm leading-none whitespace-nowrap flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(6,182,212,0.35),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-3px_0_rgba(0,0,0,0.3)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Explore Projects</span>
@@ -114,7 +114,7 @@ const HeroSection = () => {
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-t-white/15 border-x-slate-800 border-b-black/80 font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.5)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-t-white/15 border-x-slate-800 border-b-black/80 font-body font-semibold text-sm leading-none whitespace-nowrap flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.5)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                 >
                   <FileText className="w-4 h-4 text-cyan-400" />
                   <span>View Resume</span>
@@ -128,7 +128,7 @@ const HeroSection = () => {
                       window.dispatchEvent(new CustomEvent("rocket-fly-to-contact"));
                     }
                   }}
-                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-t-white/10 border-x-slate-800/80 border-b-black/80 font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.4)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-t-white/10 border-x-slate-800/80 border-b-black/80 font-body font-medium text-sm leading-none whitespace-nowrap flex items-center justify-center gap-2 shadow-[0_4px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.4)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-slate-400" />
                   <span>Contact Me</span>

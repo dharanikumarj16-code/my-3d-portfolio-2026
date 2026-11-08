@@ -23,8 +23,33 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", "sans-serif"],
-        display: ["var(--font-display)", "sans-serif"],
+        heading: ["var(--font-heading)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        sans: ["var(--font-body)", "sans-serif"],
+        display: ["var(--font-heading)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
+      fontSize: {
+        hero: [
+          "clamp(2.25rem, 1.2rem + 4.6vw, 4.5rem)",
+          { lineHeight: "1.1", letterSpacing: "-0.02em" },
+        ],
+        "hero-sub": [
+          "clamp(1.125rem, 1rem + 0.6vw, 1.5rem)",
+          { lineHeight: "1.4", letterSpacing: "0" },
+        ],
+        "section-heading": [
+          "clamp(1.75rem, 1.2rem + 2vw, 2.5rem)",
+          { lineHeight: "1.15", letterSpacing: "-0.01em" },
+        ],
+        "card-heading": [
+          "clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem)",
+          { lineHeight: "1.2", letterSpacing: "-0.01em" },
+        ],
+        "body-fluid": [
+          "clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem)",
+          { lineHeight: "1.6", letterSpacing: "0" },
+        ],
       },
       colors: {
         border: "hsl(var(--border))",

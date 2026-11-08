@@ -144,8 +144,8 @@ function Page() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none z-10" />
               </div>
               <div className="flex flex-col gap-2 items-center text-center sm:items-start sm:text-left xl:items-center xl:text-center">
-                <p className="text-lg sm:text-xl md:text-2xl">Dharanikumar J</p>
-                <div className="text-[11px] sm:text-xs bg-zinc-700 w-fit px-3 py-1 rounded-full">
+                <h2 className="text-card-heading font-heading font-semibold text-white">Dharanikumar J</h2>
+                <div className="text-[11px] sm:text-xs font-mono font-medium tracking-[0.02em] bg-zinc-800 text-cyan-300 border border-zinc-700 w-fit px-3 py-1 rounded-full">
                   AI Engineer & Automation Developer
                 </div>
               </div>
@@ -165,8 +165,8 @@ function Page() {
                         {link.icon}
                       </div>
                       <div className="flex flex-col">
-                        <div className="text-sm sm:text-base font-semibold text-white">{link.name}</div>
-                        <div className="text-xs text-slate-400 truncate">
+                        <div className="text-sm font-body font-semibold text-white">{link.name}</div>
+                        <div className="text-xs font-mono text-slate-400 truncate">
                           {link.content}
                         </div>
                       </div>
@@ -181,40 +181,40 @@ function Page() {
         <main className="w-full xl:max-w-2/3 xl:col-span-2 xl:justify-self-end">
           <div className="p-4 sm:p-6 lg:p-8 border border-zinc-700/70 rounded-2xl bg-gradient-to-b from-zinc-900/70 via-black/50 to-black/30 backdrop-blur-md shadow-lg space-y-6 sm:space-y-8">
             <div className="space-y-4 sm:space-y-6">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl">About me</h1>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-200 font-medium">
+              <h1 className="text-section-heading font-heading font-semibold text-white tracking-[-0.01em] text-balance">About me</h1>
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-100 font-medium">
                 Hi, I&apos;m Dharani 👋
               </p>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-200">
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-300 max-w-[65ch] text-pretty">
                 I&apos;m a second-year B.Tech student specializing in Artificial Intelligence and Data Science at Sri Krishna College of Engineering and Technology. I&apos;m passionate about exploring emerging technologies, experimenting with new ideas, and discovering how AI can solve real-world problems.
               </p>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-200">
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-300 max-w-[65ch] text-pretty">
                 My interests include AI agents, LangChain, LangGraph, machine learning, model training, Python development, and DevOps fundamentals. I enjoy learning how things work under the hood and turning what I learn into practical projects.
               </p>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-200">
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-300 max-w-[65ch] text-pretty">
                 I believe the best way to learn technology is by building with it. From experimenting with local AI models to exploring intelligent agents and automation, I enjoy challenging myself, learning quickly, and finding creative ways to solve problems.
               </p>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-100 font-medium">
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-100 font-medium max-w-[65ch] text-pretty">
                 My goal is to transform innovative ideas into useful AI-powered solutions and eventually build my own AI company.
               </p>
             </div>
 
             <div className="space-y-3 sm:space-y-4">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl">Beyond Coding</h2>
-              <p className="leading-relaxed text-sm sm:text-base text-zinc-200">
+              <h2 className="text-card-heading sm:text-section-heading font-heading font-semibold text-white tracking-[-0.01em] text-balance">Beyond Coding</h2>
+              <p className="leading-relaxed text-body-fluid font-body text-zinc-300 max-w-[65ch] text-pretty">
                 When I&apos;m not coding, I&apos;m exploring emerging technologies, researching new AI tools, experimenting with ideas, and looking for opportunities to improve my technical skills.
               </p>
             </div>
 
             <div className="p-4 sm:p-5 rounded-xl border border-zinc-700/80 bg-zinc-800/40 backdrop-blur-sm">
-              <h3 className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-1">My Philosophy</h3>
+              <h3 className="text-xs uppercase font-mono font-medium tracking-[0.02em] text-cyan-400 mb-1">My Philosophy</h3>
               <p className="italic text-base sm:text-lg text-purple-300">
                 &ldquo;Explore boldly. Build practically. Learn continuously.&rdquo;
               </p>
             </div>
 
             <div className="space-y-4 sm:space-y-6">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl">Stuff I use</h2>
+              <h2 className="text-card-heading sm:text-section-heading font-heading font-semibold text-white tracking-[-0.01em] text-balance">Stuff I use</h2>
               <div>
                 {!toolsLoaded ? (
                   <div className="h-[120px] bg-zinc-800/40 rounded-lg animate-pulse" />

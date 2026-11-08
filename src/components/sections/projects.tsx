@@ -169,7 +169,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
           {/* Floating 3D Status Badge */}
           <div
-            className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/90 backdrop-blur-md border border-cyan-500/40 text-[11px] font-mono text-cyan-300 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
+            className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/90 backdrop-blur-md border border-cyan-500/40 text-[11px] font-mono font-medium tracking-[0.02em] text-cyan-300 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
             style={{ transform: "translateZ(14px)" }}
           >
             <Sparkles className="w-3 h-3 text-cyan-400" />
@@ -179,11 +179,11 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
         {/* Content Body with Parallax Depth */}
         <div className="p-6" style={{ transform: "translateZ(12px)" }}>
-          <h3 className="text-xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors">
+          <h3 className="text-card-heading font-heading font-semibold text-white tracking-[-0.01em] group-hover:text-cyan-300 transition-colors text-balance">
             {project.name}
           </h3>
 
-          <p className="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed line-clamp-3">
+          <p className="text-xs sm:text-sm font-body text-slate-300/85 mt-2.5 leading-relaxed line-clamp-3 max-w-[65ch]">
             {project.description}
           </p>
 
@@ -193,7 +193,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
               {project.highlights.slice(0, 2).map((highlight, hIdx) => (
                 <li
                   key={hIdx}
-                  className="flex items-start gap-2 text-[12px] text-slate-200 leading-snug"
+                  className="flex items-start gap-2 text-[12px] font-body text-slate-200/90 leading-snug"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
                   <span>{highlight}</span>
@@ -211,7 +211,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
               return (
                 <span
                   key={techName}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-[11px] font-mono text-cyan-200 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-[11px] font-mono font-medium tracking-[0.02em] text-cyan-200 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-0.5"
                   style={{ transform: "translateZ(6px)" }}
                 >
                   {iconSrc && (
@@ -239,7 +239,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-[0_6px_16px_rgba(6,182,212,0.3),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.3)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-all cursor-pointer"
+            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-body font-semibold text-xs whitespace-nowrap leading-none flex items-center justify-center gap-2 shadow-[0_6px_16px_rgba(6,182,212,0.3),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.3)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-all cursor-pointer"
           >
             <span>Live Demo</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -251,7 +251,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-100 font-semibold text-xs flex items-center justify-center gap-2 border border-slate-700/80 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.4)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.6)] transition-all cursor-pointer",
+            "py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-100 font-body font-semibold text-xs whitespace-nowrap leading-none flex items-center justify-center gap-2 border border-slate-700/80 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.4)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.6)] transition-all cursor-pointer",
             hasLiveDemo ? "w-auto" : "flex-1"
           )}
           title="View GitHub Repository"

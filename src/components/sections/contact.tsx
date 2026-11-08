@@ -40,25 +40,25 @@ const ContactSection = () => {
             <div className="p-6 sm:p-8">
               <div className="flex items-center gap-2 mb-2" style={{ transform: "translateZ(8px)" }}>
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shadow-[0_0_8px_#22d3ee]" />
-                <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">
+                <span className="text-[11px] font-mono font-medium uppercase tracking-[0.02em] text-cyan-400">
                   Direct Inquiries &amp; Collaborations
                 </span>
               </div>
-              <h2
-                className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2"
+              <h3
+                className="text-card-heading font-heading font-semibold text-white tracking-[-0.01em] mb-2 text-balance"
                 style={{ transform: "translateZ(12px)" }}
               >
                 Send a Message
-              </h2>
+              </h3>
               <p
-                className="text-sm sm:text-base text-slate-300 mb-6"
+                className="text-xs sm:text-sm font-body text-slate-300/85 mb-6 max-w-[65ch] leading-relaxed"
                 style={{ transform: "translateZ(8px)" }}
               >
                 Reach out directly via email at{" "}
                 <a
                   target="_blank"
                   href={`mailto:${config.email}`}
-                  className="text-cyan-400 hover:text-cyan-300 font-semibold underline underline-offset-4 cursor-pointer transition-colors"
+                  className="text-cyan-400 hover:text-cyan-300 font-medium underline underline-offset-4 cursor-pointer transition-colors"
                 >
                   {config.email}
                 </a>{" "}
@@ -101,32 +101,32 @@ const ContactSection = () => {
                 className="w-full rounded-2xl border border-cyan-500/40 bg-slate-950/90 backdrop-blur-xl p-5 shadow-[0_12px_30px_rgba(0,0,0,0.7),0_0_20px_rgba(6,182,212,0.15),inset_0_1px_0_rgba(255,255,255,0.2)] space-y-3"
               >
                 <div className="flex items-center justify-between" style={{ transform: "translateZ(8px)" }}>
-                  <span className="flex items-center gap-2 text-xs font-mono text-emerald-400">
+                  <span className="flex items-center gap-2 text-xs font-mono font-medium tracking-[0.01em] text-emerald-400">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                     </span>
                     Available for Hire &amp; Collaboration
                   </span>
-                  <span className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 shadow-sm">
+                  <span className="flex items-center gap-1 text-[11px] font-mono font-medium tracking-[0.02em] px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 shadow-sm">
                     <Sparkles className="w-3 h-3 text-cyan-400" />
                     AI &amp; Data Science
                   </span>
                 </div>
 
-                <p className="text-xs text-zinc-300 leading-relaxed" style={{ transform: "translateZ(6px)" }}>
+                <p className="text-xs font-body text-slate-300/85 leading-relaxed max-w-[65ch]" style={{ transform: "translateZ(6px)" }}>
                   Interested in building innovative AI agents, custom machine learning models, or automated systems? Send a message and let&apos;s turn vision into reality.
                 </p>
 
                 <div
-                  className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-400"
+                  className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-xs font-body text-slate-400"
                   style={{ transform: "translateZ(6px)" }}
                 >
                   <span className="flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-cyan-400" />
                     Tamil Nadu, India
                   </span>
-                  <span className="font-mono text-[11px] text-cyan-300">
+                  <span className="font-mono text-[11px] font-medium tracking-[0.02em] text-cyan-300">
                     ⚡ Fast Response (&lt; 24h)
                   </span>
                 </div>

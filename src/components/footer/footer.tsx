@@ -20,7 +20,7 @@ function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="flex w-full shrink-0 flex-col items-center gap-4 border-t border-slate-800/80 bg-slate-950/80 backdrop-blur-md px-4 py-8 sm:flex-row md:px-8 sm:justify-between z-20">
-      <p className="text-xs text-slate-400">
+      <p className="text-xs font-body text-slate-400 tabular-nums">
         © {year} {config.author}. All rights reserved.
       </p>
       <SocialMediaButtons />
@@ -32,7 +32,7 @@ function Footer() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 hover:border-cyan-400 text-xs font-semibold text-slate-300 hover:text-cyan-300 shadow-[0_4px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 hover:border-cyan-400 text-xs font-body font-semibold whitespace-nowrap text-slate-300 hover:text-cyan-300 shadow-[0_4px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all cursor-pointer"
           title="Boost to Top with Rocket"
         >
           <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />

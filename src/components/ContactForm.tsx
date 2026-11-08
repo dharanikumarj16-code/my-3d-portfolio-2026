@@ -177,20 +177,19 @@ const ContactForm = () => {
       </div>
       <Button
         disabled={loading}
-        className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+        className="relative group/btn w-full h-11 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold rounded-xl shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-500/40 active:scale-[0.99] cursor-pointer"
         type="submit"
       >
         {loading ? (
-          <div className="flex items-center justify-center">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            <p>Please wait</p>
+          <div className="flex items-center justify-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin text-slate-950" />
+            <p>Transmitting message...</p>
           </div>
         ) : (
-          <div className="flex items-center justify-center">
-            Send Message <ChevronRight className="w-4 h-4 ml-4" />
+          <div className="flex items-center justify-center gap-2">
+            Send Message <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
           </div>
         )}
-        <BottomGradient />
       </Button>
     </form>
   );

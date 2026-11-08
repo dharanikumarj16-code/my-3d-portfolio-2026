@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EXPERIENCE, SkillNames, SKILLS } from "@/data/constants";
 import { getExperiences } from "@/lib/supabase/data-service";
 import { SectionHeader } from "./section-header";
@@ -8,7 +8,7 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import SectionWrapper from "../ui/section-wrapper";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { GraduationCap, Briefcase, Calendar, MapPin, Award, CheckCircle2 } from "lucide-react";
 
 const ExperienceSection = () => {
   const [experienceList, setExperienceList] = useState<any[]>(EXPERIENCE);
@@ -26,121 +26,132 @@ const ExperienceSection = () => {
   return (
     <SectionWrapper
       id="experience"
-      className="flex flex-col items-center justify-center min-h-[100dvh] md:min-h-[180dvh] py-20"
+      className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 z-10"
     >
-      <div className="w-full max-w-4xl px-4 md:px-8 mx-auto" id="experience">
-        <SectionHeader
-          id="experience"
-          title="Experience & Education"
-          desc="My academic and technical journey in AI & software development."
-          className="mb-12 md:mb-20 mt-0"
-        />
+      <SectionHeader
+        id="experience"
+        eyebrow="Milestones & Timeline"
+        title={
+          <span>
+            Experience &amp; <span className="bg-gradient-to-r from-cyan-400 to-teal-300 bg-clip-text text-transparent">Education</span>
+          </span>
+        }
+        desc="My academic foundation at SKCET and hands-on software & AI engineering track record."
+      />
 
-        <div
-          className="relative flex flex-col gap-8 md:block"
-          style={{
-            minHeight: `calc(${experienceList.length} * 70vh)`,
-          }}
-        >
-          {experienceList.map((exp, index) => (
-            <ExperienceCard
+      {/* Timeline Container */}
+      <div className="relative mt-12 pl-6 sm:pl-8 border-l border-slate-800/80 space-y-12">
+        {/* Subtle Glowing Timeline Spine */}
+        <div className="absolute top-0 bottom-0 left-[-1px] w-[2px] bg-gradient-to-b from-cyan-500 via-teal-500/50 to-transparent pointer-events-none" />
+
+        {experienceList.map((exp, index) => {
+          const isEducation =
+            exp.title?.toLowerCase().includes("b.tech") ||
+            exp.role?.toLowerCase().includes("b.tech") ||
+            exp.company?.toLowerCase().includes("student");
+
+          const roleTitle = exp.title || exp.role;
+          const periodText = exp.period || `${exp.startDate} - ${exp.endDate}`;
+          const descriptions = exp.description || [];
+
+          return (
+            <motion.div
               key={exp.id || index}
-              experience={exp}
-              index={index}
-              total={experienceList.length}
-            />
-          ))}
-        </div>
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className="relative group"
+            >
+              {/* Timeline Pin Node */}
+              <div
+                className={cn(
+                  "absolute -left-[37px] sm:-left-[45px] top-1.5 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300",
+                  "bg-slate-950 border-slate-700 group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+                )}
+              >
+                {isEducation ? (
+                  <GraduationCap className="w-4 h-4 text-cyan-400" />
+                ) : (
+                  <Briefcase className="w-4 h-4 text-teal-400" />
+                )}
+              </div>
+
+              {/* Milestone Card */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 backdrop-blur-xl shadow-xl hover:shadow-[0_10px_35px_rgba(6,182,212,0.08)] transition-all duration-300">
+                {/* Header Row */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-slate-800/60">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors">
+                      {roleTitle}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1 text-xs sm:text-sm font-medium text-slate-300">
+                      <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <span>{exp.company}</span>
+                    </div>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs font-mono text-cyan-300 self-start sm:self-auto shrink-0">
+                    <Calendar className="w-3 h-3 text-cyan-400" />
+                    <span>{periodText}</span>
+                  </span>
+                </div>
+
+                {/* Bullet Points */}
+                <ul className="mt-5 space-y-2.5">
+                  {descriptions.map((desc: string, dIdx: number) => {
+                    // Check if line contains a section tag or certification
+                    const isCertLine = desc.startsWith("Certifications:");
+
+                    return (
+                      <li
+                        key={dIdx}
+                        className={cn(
+                          "flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed",
+                          isCertLine && "p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/20 text-cyan-200 mt-3"
+                        )}
+                      >
+                        {isCertLine ? (
+                          <Award className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                        ) : (
+                          <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                        )}
+                        <span>{desc}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {/* Skills Utilized Pills */}
+                {exp.skills && exp.skills.length > 0 && (
+                  <div className="mt-6 pt-5 border-t border-slate-800/60 flex flex-wrap items-center gap-2">
+                    <span className="text-[11px] font-mono text-slate-400 mr-1">Skills:</span>
+                    {exp.skills.map((skillName: string) => {
+                      const skill = SKILLS[skillName as SkillNames];
+                      if (!skill) return null;
+
+                      return (
+                        <span
+                          key={skillName}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/60 border border-slate-700/50 text-[11px] font-mono text-slate-300"
+                        >
+                          <img
+                            src={skill.icon}
+                            alt={skill.label}
+                            className="w-3.5 h-3.5 object-contain"
+                          />
+                          <span>{skill.label}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </SectionWrapper>
-  );
-};
-
-const ExperienceCard = ({
-  experience,
-  index,
-}: {
-  experience: any;
-  index: number;
-  total: number;
-}) => {
-  const roleTitle = experience.title || experience.role;
-  const periodText = experience.period || `${experience.startDate} - ${experience.endDate}`;
-  const descriptions = experience.description || [];
-
-  return (
-    <motion.div
-      className="sticky top-40 md:top-52 max-w-3xl"
-      style={{
-        zIndex: index + 1,
-        paddingTop: index === 0 ? 0 : index * 95,
-      }}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.4,
-        delay: index * 0.1,
-        ease: "easeOut",
-      }}
-      viewport={{ once: true, margin: "-50px" }}
-    >
-      <Card
-        className={cn(
-          "bg-card text-card-foreground border-border",
-          "hover:border-primary/20 transition-colors duration-300",
-          "shadow-sm hover:shadow-md"
-        )}
-      >
-        <CardHeader className="pb-3">
-          <div className="flex flex-row items-start justify-between gap-4">
-            <div className="space-y-1">
-              <CardTitle className="text-xl font-bold tracking-tight">
-                {roleTitle}
-              </CardTitle>
-              <div className="text-base font-medium text-muted-foreground">
-                {experience.company}
-              </div>
-            </div>
-            <Badge
-              variant="secondary"
-              className="w-fit font-mono text-xs font-normal"
-            >
-              {periodText}
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
-            {descriptions.map((point: string, i: number) => (
-              <li key={i}>{point}</li>
-            ))}
-          </ul>
-
-          {experience.skills && experience.skills.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {experience.skills.map((skillName: string) => {
-                const skill = SKILLS[skillName as SkillNames];
-                if (!skill) return null;
-                return (
-                  <Badge
-                    key={skillName}
-                    variant="outline"
-                    className="gap-2 text-xs font-normal bg-secondary/30 hover:bg-secondary/50 transition-colors border-transparent"
-                  >
-                    <img
-                      src={skill.icon}
-                      alt={skill.label}
-                      className="w-3.5 h-3.5 object-contain opacity-80"
-                    />
-                    {skill.label}
-                  </Badge>
-                );
-              })}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </motion.div>
   );
 };
 

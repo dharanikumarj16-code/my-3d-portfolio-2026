@@ -30,19 +30,27 @@ const ContactSection = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-[10] mt-6">
         {/* Left Column: Contact Form */}
         <div className="lg:col-span-7">
-          <Card className="w-full bg-white/70 dark:bg-black/70 backdrop-blur-md rounded-2xl border border-zinc-800/80 shadow-2xl">
+          <Card className="w-full bg-slate-950/85 backdrop-blur-xl rounded-2xl border border-slate-800/90 shadow-2xl shadow-cyan-950/20">
             <CardHeader className="pb-4">
-              <CardTitle className="text-3xl sm:text-4xl">Contact Form</CardTitle>
-              <CardDescription className="text-sm sm:text-base">
-                Please contact me directly at{" "}
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">
+                  Direct Inquiries &amp; Collaborations
+                </span>
+              </div>
+              <CardTitle className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                Send a Message
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-base text-slate-300">
+                Reach out directly via email at{" "}
                 <a
                   target="_blank"
                   href={`mailto:${config.email}`}
-                  className="text-cyan-400 hover:text-cyan-300 font-medium underline underline-offset-4 cursor-can-hover transition-colors"
+                  className="text-cyan-400 hover:text-cyan-300 font-semibold underline underline-offset-4 cursor-pointer transition-colors"
                 >
                   {config.email}
                 </a>{" "}
-                or drop your info here.
+                or fill in your details below.
               </CardDescription>
             </CardHeader>
             <CardContent>

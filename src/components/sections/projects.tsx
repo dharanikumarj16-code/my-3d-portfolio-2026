@@ -1,136 +1,25 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SectionHeader } from "./section-header";
 import { cn } from "@/lib/utils";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { PROJECTS, SimpleProject } from "@/data/projects";
 import { getProjects } from "@/lib/supabase/data-service";
-
-const tiltOptions = {
-  max: 5,
-  speed: 400,
-  glare: true,
-  "max-glare": 0.2,
-  gyroscope: false,
-};
-
-const ProjectsSection = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [projectList, setProjectList] = useState<any[]>(PROJECTS);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    getProjects()
-      .then((data) => {
-        if (data && data.length > 0) {
-          setProjectList(data);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
-    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsDesktop(
-        e instanceof MediaQueryListEvent ? e.matches : media.matches
-      );
-    handler(media);
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }, []);
-
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const setup = () => {
-        const section = sectionRef.current;
-        const track = trackRef.current;
-        if (!section || !track) return;
-
-        const distance = track.scrollWidth - section.clientWidth;
-        ScrollTrigger.getById("projects-horizontal")?.kill();
-        gsap.set(track, { x: 0 });
-        if (distance <= 0) return;
-
-        gsap.to(track, {
-          x: -distance,
-          ease: "none",
-          scrollTrigger: {
-            id: "projects-horizontal",
-            trigger: section,
-            start: "top 30%",
-            end: () => `+=${distance + window.innerHeight}`,
-            scrub: true,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-      };
-
-      setup();
-      ScrollTrigger.addEventListener("refreshInit", setup);
-
-      return () => {
-        ScrollTrigger.removeEventListener("refreshInit", setup);
-        ScrollTrigger.getById("projects-horizontal")?.kill();
-      };
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section
-      id="projects"
-      className="relative max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24"
-    >
-      <SectionHeader
-        id="projects"
-        title="Projects"
-        desc="Featured AI systems, intelligent agents & automation builds."
-      />
-      <div
-        ref={sectionRef}
-        className="mt-10 overflow-x-hidden w-screen max-w-none -mx-[calc(50vw-50%)]"
-      >
-        <div
-          ref={trackRef}
-          className="flex gap-8 overflow-visible pb-6 snap-x snap-mandatory w-max"
-        >
-          {projectList.map((project) => (
-            <ProjectCard
-              key={project.id || project.name}
-              project={project}
-              isDesktop={isDesktop}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-type ProjectCardProps = {
-  project: any;
-  isDesktop: boolean;
-};
+import { ExternalLink, Sparkles, CheckCircle2 } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 
 const imageExtensions: Record<string, string> = {
+  smartfarm: "png",
   jiniz: "jpg",
   jarvis: "jpg",
   autosilentpro: "jpg",
 };
 
 const availableTechIcons: Record<string, string> = {
-  git: "/assets/tech/git.svg",
   python: "/assets/tech/python.svg",
   kotlin: "/assets/tech/kotlin.svg",
+  git: "/assets/tech/git.svg",
   javascript: "/assets/tech/javascript.svg",
   typescript: "/assets/tech/typescript.svg",
   nextjs: "/assets/tech/nextjs.svg",
@@ -146,131 +35,214 @@ const availableTechIcons: Record<string, string> = {
   sql: "/assets/tech/sql.png",
   seaborn: "/assets/tech/seaborn.png",
   vscode: "/assets/tech/vscode.png",
-  leetcode: "/assets/tech/leetcode.png",
-  gsap: "/assets/tech/gsap.svg",
-  sass: "/assets/tech/sass.svg",
-  redux: "/assets/tech/redux.svg",
 };
 
-const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+const ProjectsSection = () => {
+  const [projectList, setProjectList] = useState<SimpleProject[]>(PROJECTS);
 
   useEffect(() => {
-    if (!cardRef.current) return;
-    import("vanilla-tilt").then(({ default: VanillaTilt }: any) => {
-      VanillaTilt.init(cardRef.current, tiltOptions);
-    });
+    getProjects()
+      .then((data) => {
+        if (data && data.length > 0) {
+          // Merge with static metadata for rich highlights/links if not present in DB
+          const enriched = data.map((dbProj, idx) => {
+            const staticMatch = PROJECTS.find(
+              (p) => p.name.toLowerCase() === dbProj.name.toLowerCase()
+            ) || PROJECTS[idx % PROJECTS.length];
+
+            return {
+              ...staticMatch,
+              ...dbProj,
+              githubUrl: (dbProj as any).github_url || staticMatch?.githubUrl,
+              liveUrl: (dbProj as any).live_url || dbProj.url || staticMatch?.liveUrl,
+              highlights: staticMatch?.highlights || [
+                "Production engineered for performance and scalability",
+                "Full data processing and continuous deployment pipeline"
+              ],
+            };
+          });
+          setProjectList(enriched);
+        }
+      })
+      .catch(() => {});
   }, []);
 
+  return (
+    <section
+      id="projects"
+      className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 z-10"
+    >
+      <SectionHeader
+        id="projects"
+        eyebrow="Engineering Showcase"
+        title={
+          <span>
+            Featured <span className="bg-gradient-to-r from-cyan-400 to-teal-300 bg-clip-text text-transparent">AI Projects</span>
+          </span>
+        }
+        desc="Production predictive pipelines, intelligent agents, and software systems designed to solve real-world problems."
+      />
+
+      {/* Responsive Projects Showcase Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+        {projectList.map((project, idx) => (
+          <ProjectCard key={project.name + idx} project={project} index={idx} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+interface ProjectCardProps {
+  project: SimpleProject;
+  index: number;
+}
+
+const ProjectCard = ({ project, index }: ProjectCardProps) => {
   const imageSrc =
-    project.image_url ||
-    (project.imageKey
+    project.imageKey
       ? `/assets/projects-screenshots/${project.imageKey}.${
           imageExtensions[project.imageKey] ?? "png"
         }`
-      : "/assets/projects-screenshots/jarvis.jpg");
+      : (project as any).image_url || "/assets/projects-screenshots/jarvis.jpg";
 
-  const gradientColors = project.gradient || ["#0b2b1a", "#10b981"];
+  const liveUrl = project.liveUrl || project.url;
+  const githubUrl = project.githubUrl || project.url;
+  const hasLiveDemo = liveUrl && !liveUrl.includes("github.com");
 
   return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noreferrer"
+    <div
       className={cn(
-        "overflow-hidden rounded-3xl snap-start link",
-        "flex-shrink-0"
+        "group relative flex flex-col justify-between rounded-3xl overflow-hidden",
+        "bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40",
+        "shadow-xl hover:shadow-[0_10px_40px_rgba(6,182,212,0.12)]",
+        "backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5"
       )}
-      style={{
-        width: "min(90vw, 38rem)",
-        maxWidth: isDesktop ? "calc(100vw - 2rem)" : "calc(100vw - 4rem)",
-        minWidth: "260px",
-        flex: "1 0 auto",
-        WebkitMaskImage: "-webkit-radial-gradient(white, black)",
-      }}
     >
+      {/* Top Ambient Glow Accent */}
       <div
-        ref={cardRef}
-        className={cn(
-          "relative p-6 flex flex-col justify-between max-w-full rounded-3xl",
-          "h-[20rem] sm:h-[22rem] md:h-[26rem]",
-          "shadow-lg transition-transform duration-300 hover:-translate-y-2",
-          "[transform-style:preserve-3d] [transform:perspective(1000px)] overflow-hidden"
-        )}
+        className="absolute top-0 inset-x-0 h-1 pointer-events-none opacity-80"
         style={{
-          background: `linear-gradient(90deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 100%)`,
+          background: `linear-gradient(90deg, ${project.gradient?.[0] || "#0891b2"}, ${
+            project.gradient?.[1] || "#14b8a6"
+          })`,
         }}
-      >
-        <Image
-          src="/assets/project-bg.svg"
-          alt="project"
-          className="absolute top-0 left-0 w-full h-full opacity-20 rounded-3xl object-cover pointer-events-none"
-          fill
-        />
-        <Image
-          src={imageSrc}
-          alt={project.name}
-          unoptimized={typeof imageSrc === "string" && imageSrc.startsWith("http")}
-          className={cn(
-            "absolute top-0 bottom-auto left-auto rounded-xl shadow-xl object-contain",
-            "w-[12rem] sm:w-[15rem] md:w-[17rem]",
-            "rotate-[-22.5deg]",
-            "h-auto min-w-0 max-h-none",
-            "z-0"
-          )}
-          sizes="(min-width: 1024px) 272px, (min-width: 640px) 240px, 192px"
-          priority={false}
-          style={{ right: "1.5rem" }}
-          width={400}
-          height={400}
-        />
-        {!isDesktop && (
-          <div
-            className="absolute bottom-0 left-0 w-full h-20"
-            style={{
-              background: `linear-gradient(0deg, ${gradientColors[0]} 10%, rgba(0,0,0,0) 100%)`,
-            }}
+      />
+
+      <div>
+        {/* Mockup Frame Header */}
+        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800/80 bg-slate-950/50">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+          </div>
+          <span className="text-[11px] font-mono text-slate-400 truncate max-w-[180px]">
+            {project.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}.ai
+          </span>
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+        </div>
+
+        {/* Project Screenshot Container with Hover Zoom */}
+        <div className="relative w-full h-52 sm:h-56 bg-slate-950 overflow-hidden border-b border-slate-800/60">
+          <Image
+            src={imageSrc}
+            alt={project.name}
+            fill
+            unoptimized={typeof imageSrc === "string" && imageSrc.startsWith("http")}
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           />
-        )}
-        <h1
-          className="z-10 text-xl font-medium sm:text-2xl text-white"
-          style={{ transform: "translateZ(3rem)" }}
-        >
-          {project.name}
-        </h1>
-        <div
-          className={cn(
-            "w-1/2 h-full absolute left-24 top-0 sm:flex items-center hidden",
-            "rotate-[-22.5deg]"
-          )}
-          style={{ transform: "rotate(-22.5deg) translateZ(3rem)" }}
-        >
-          <div className="flex flex-col pb-8">
-            {project.tech
-              ?.filter((el: string) => availableTechIcons[el.toLowerCase().trim()])
-              .map((el: string, i: number) => {
-                const iconSrc = availableTechIcons[el.toLowerCase().trim()];
-                return (
-                  <Image
-                    className={`${i % 2 === 0 && "ml-16"} mb-4`}
-                    src={iconSrc}
-                    alt={el}
-                    height={45}
-                    width={45}
-                    key={el}
-                  />
-                );
-              })}
+          {/* Subtle vignette gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
+          {/* Status Badge */}
+          <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-cyan-500/30 text-[11px] font-mono text-cyan-300 shadow-md">
+            <Sparkles className="w-3 h-3 text-cyan-400" />
+            <span>{hasLiveDemo ? "Live Deployment" : "Open Source"}</span>
           </div>
         </div>
-        <h2
-          className="z-10 text-sm font-normal tracking-wide text-white"
-          style={{ transform: "translateZ(0.8rem)" }}
-        >
-          {project.description}
-        </h2>
+
+        {/* Content Body */}
+        <div className="p-6">
+          <h3 className="text-xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors">
+            {project.name}
+          </h3>
+
+          <p className="text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed line-clamp-3">
+            {project.description}
+          </p>
+
+          {/* Key Feature Highlights */}
+          {project.highlights && project.highlights.length > 0 && (
+            <ul className="mt-4 space-y-1.5 border-t border-slate-800/60 pt-4">
+              {project.highlights.slice(0, 2).map((highlight, hIdx) => (
+                <li
+                  key={hIdx}
+                  className="flex items-start gap-2 text-[12px] text-slate-300 leading-snug"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Tech Stack Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 mt-5">
+            {project.tech?.map((techName) => {
+              const cleanTech = techName.toLowerCase().trim();
+              const iconSrc = availableTechIcons[cleanTech];
+
+              return (
+                <span
+                  key={techName}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700/60 text-[11px] font-mono text-cyan-200"
+                >
+                  {iconSrc && (
+                    <img
+                      src={iconSrc}
+                      alt={techName}
+                      className="w-3 h-3 object-contain"
+                    />
+                  )}
+                  <span className="capitalize">{cleanTech}</span>
+                </span>
+              );
+            })}
+          </div>
+        </div>
       </div>
-    </a>
+
+      {/* Card Action Buttons Footer */}
+      <div className="p-6 pt-0 mt-2 flex items-center gap-3">
+        {hasLiveDemo && (
+          <a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-semibold text-xs flex items-center justify-center gap-2 shadow-md shadow-cyan-500/20 active:scale-95 transition-all"
+          >
+            <span>Live Demo</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        )}
+
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 font-medium text-xs flex items-center justify-center gap-2 border border-slate-700 transition-all active:scale-95",
+            hasLiveDemo ? "w-auto" : "flex-1"
+          )}
+          title="View GitHub Repository"
+        >
+          <SiGithub className="w-3.5 h-3.5" />
+          <span>{hasLiveDemo ? "Code" : "View on GitHub"}</span>
+        </a>
+      </div>
+    </div>
   );
 };
 

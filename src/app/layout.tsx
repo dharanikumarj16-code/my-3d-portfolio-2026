@@ -74,7 +74,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={[inter.variable, archivoBlack.variable, "font-display"].join(" ")} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={[inter.variable, archivoBlack.variable, "font-sans", "scroll-smooth"].join(" ")}
+      suppressHydrationWarning
+    >
       <head>
         <Script
           defer
@@ -105,7 +109,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </head>
-      <body>
+      <body className="font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
         <Providers>
           <Header />
           {children}

@@ -96,8 +96,8 @@ const SkillsSection = () => {
                   "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
                   "border backdrop-blur-md cursor-pointer",
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-105"
-                    : "bg-background/60 hover:bg-background/90 text-muted-foreground hover:text-foreground border-border/60 hover:border-border"
+                    ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/50 shadow-lg shadow-cyan-500/10 scale-105"
+                    : "bg-slate-900/60 hover:bg-slate-900/90 text-slate-400 hover:text-slate-200 border-slate-800/80 hover:border-slate-700"
                 )}
               >
                 {cat.icon}
@@ -109,9 +109,10 @@ const SkillsSection = () => {
 
         {/* Active Skill HUD Card */}
         {selectedSkill && (
-          <div className="w-full max-w-2xl mb-8 p-4 md:p-5 rounded-2xl border border-border/80 bg-background/75 backdrop-blur-xl shadow-2xl transition-all duration-300 flex items-center gap-4 z-20">
+          <div className="w-full max-w-2xl mb-8 p-4 md:p-5 rounded-2xl border border-slate-800/90 bg-slate-950/80 backdrop-blur-xl shadow-2xl transition-all duration-300 flex items-center gap-4 z-20 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-transparent pointer-events-none" />
             <div
-              className="w-14 h-14 rounded-xl flex items-center justify-center p-2.5 shadow-inner border border-white/10 shrink-0"
+              className="w-14 h-14 rounded-xl flex items-center justify-center p-2.5 shadow-inner border border-white/10 shrink-0 transition-transform group-hover:scale-105"
               style={{ backgroundColor: `${selectedSkill.color}25` }}
             >
               <Image
@@ -125,12 +126,12 @@ const SkillsSection = () => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
+                <h3 className="text-lg md:text-xl font-bold tracking-tight text-white">
                   {selectedSkill.label}
                 </h3>
                 <Badge
                   variant="outline"
-                  className="text-[10px] uppercase font-mono px-2 py-0 border-primary/30 text-primary"
+                  className="text-[10px] uppercase font-mono px-2 py-0 border-cyan-500/30 text-cyan-400 bg-cyan-950/40"
                 >
                   {selectedSkill.category}
                 </Badge>
@@ -139,7 +140,7 @@ const SkillsSection = () => {
                   Active Skill
                 </span>
               </div>
-              <p className="text-xs md:text-sm text-muted-foreground leading-snug">
+              <p className="text-xs md:text-sm text-slate-300 leading-snug">
                 {selectedSkill.shortDescription}
               </p>
             </div>
@@ -162,12 +163,12 @@ const SkillsSection = () => {
                   "group relative flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all duration-200",
                   "backdrop-blur-md cursor-pointer select-none active:scale-95",
                   isSelected
-                    ? "border-primary bg-primary/10 shadow-lg shadow-primary/15 -translate-y-1"
-                    : "border-border/60 bg-background/50 hover:bg-background/80 hover:border-border hover:-translate-y-0.5",
+                    ? "border-cyan-500 bg-cyan-950/30 text-white shadow-lg shadow-cyan-500/15 -translate-y-1"
+                    : "border-slate-800/80 bg-slate-900/50 hover:bg-slate-900/80 hover:border-slate-700 hover:-translate-y-0.5 text-slate-300",
                   isItemPressing && "scale-95 translate-y-0.5"
                 )}
                 style={{
-                  boxShadow: isSelected ? `0 0 20px ${skill.color}30` : undefined,
+                  boxShadow: isSelected ? `0 0 20px ${skill.color}35` : undefined,
                 }}
               >
                 <div
@@ -183,10 +184,10 @@ const SkillsSection = () => {
                     unoptimized
                   />
                 </div>
-                <span className="text-xs font-semibold text-foreground line-clamp-1 w-full">
+                <span className="text-xs font-semibold text-white line-clamp-1 w-full">
                   {skill.label}
                 </span>
-                <span className="text-[10px] text-muted-foreground/70 font-mono mt-0.5">
+                <span className="text-[10px] text-slate-400 font-mono mt-0.5">
                   {skill.category === "AI, ML & Data Science"
                     ? "AI / ML"
                     : skill.category === "Languages & Core"

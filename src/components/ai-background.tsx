@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 interface Star {
   x: number;
@@ -13,6 +14,9 @@ interface Star {
   twinkleSpeed: number;
   twinklePhase: number;
   hasGlint: boolean;
+  // Computed render positions for connecting lines
+  renderX: number;
+  renderY: number;
 }
 
 interface Stardust {
@@ -39,18 +43,35 @@ interface ShootingStar {
   active: boolean;
 }
 
-const STAR_COLORS = [
-  "#ffffff", // Brilliant White
-  "#38bdf8", // Diamond Cyan
-  "#22d3ee", // Electric Cyan
-  "#2dd4bf", // Vibrant Teal
-  "#c084fc", // Soft Celestial Violet
-  "#fef08a", // Warm Gold Starlight
+// Pure White & Warm White (Light Yellow) palette for Dark Mode (No Blue/Purple)
+const DARK_STAR_COLORS = [
+  "#ffffff", // Pure White
+  "#ffffff", // Pure White
+  "#f8fafc", // Bright Starlight White
+  "#fffbeb", // Soft Warm White
+  "#fef9c3", // Light Warm Yellow
+  "#fef08a", // Warm Starlight Glow
+];
+
+// Elegant contrast palette for Light Mode (White Mode)
+const LIGHT_STAR_COLORS = [
+  "#0f172a", // Deep Slate
+  "#1e293b", // Slate Charcoal
+  "#334155", // Neutral Charcoal
+  "#475569", // Soft Slate
+  "#78716c", // Warm Stone
 ];
 
 const AIBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted ? (resolvedTheme || theme) !== "light" : true;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -99,10 +120,12 @@ const AIBackground: React.FC = () => {
     };
 
     const stardustList: Stardust[] = [];
-    const MAX_STARDUST = 90;
+    const MAX_STARDUST = 80;
 
     let lastSpawnX = 0;
     let lastSpawnY = 0;
+
+    const activeStarColors = isDark ? DARK_STAR_COLORS : LIGHT_STAR_COLORS;
 
     const handleMouseMove = (e: MouseEvent) => {
       const clientX = e.clientX;
@@ -118,29 +141,29 @@ const AIBackground: React.FC = () => {
       mouse.idleTimer = 0;
 
       // Parallax target relative to center
-      camera.targetX = (clientX - window.innerWidth / 2) * 0.055;
-      camera.targetY = (clientY - window.innerHeight / 2) * 0.055;
+      camera.targetX = (clientX - window.innerWidth / 2) * 0.05;
+      camera.targetY = (clientY - window.innerHeight / 2) * 0.05;
 
       // Emit stardust particles along cursor path when moving
       const dist = Math.hypot(clientX - lastSpawnX, clientY - lastSpawnY);
-      if (dist > 5) {
+      if (dist > 6) {
         lastSpawnX = clientX;
         lastSpawnY = clientY;
 
-        const count = Math.min(Math.floor(dist / 6), 3);
+        const count = Math.min(Math.floor(dist / 7), 3);
         for (let i = 0; i < count; i++) {
           if (stardustList.length < MAX_STARDUST) {
             const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 1.5 + 0.3;
+            const speed = Math.random() * 1.4 + 0.3;
             stardustList.push({
               x: clientX + (Math.random() - 0.5) * 8,
               y: clientY + (Math.random() - 0.5) * 8,
-              vx: Math.cos(angle) * speed + mouse.vx * 0.08,
-              vy: Math.sin(angle) * speed + mouse.vy * 0.08 - 0.3,
-              size: Math.random() * 2.2 + 1.0,
-              color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+              vx: Math.cos(angle) * speed + mouse.vx * 0.07,
+              vy: Math.sin(angle) * speed + mouse.vy * 0.07 - 0.25,
+              size: Math.random() * 2.0 + 1.0,
+              color: activeStarColors[Math.floor(Math.random() * activeStarColors.length)],
               alpha: 1.0,
-              maxLife: Math.floor(Math.random() * 25) + 30,
+              maxLife: Math.floor(Math.random() * 24) + 28,
               life: 0,
               rotation: Math.random() * Math.PI,
               rotSpeed: (Math.random() - 0.5) * 0.1,
@@ -163,23 +186,27 @@ const AIBackground: React.FC = () => {
     let stars: Star[] = [];
     const initStars = () => {
       const area = window.innerWidth * window.innerHeight;
-      const count = Math.min(Math.max(Math.floor(area / 4200), 160), 340);
+      const count = Math.min(Math.max(Math.floor(area / 4400), 150), 320);
       stars = [];
 
       for (let i = 0; i < count; i++) {
         const depth = Math.random() * 0.9 + 0.1; // 0.1 (far) to 1.0 (near)
-        const isForeground = depth > 0.7;
+        const isForeground = depth > 0.65;
 
         stars.push({
           x: Math.random() * width,
           y: Math.random() * height,
           depth,
-          radius: (Math.random() * 1.6 + 0.5) * (depth * 1.2 + 0.4),
-          baseAlpha: Math.random() * 0.5 + 0.35,
-          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+          radius: (Math.random() * 1.5 + 0.6) * (depth * 1.1 + 0.4),
+          baseAlpha: isDark
+            ? Math.random() * 0.45 + 0.35
+            : Math.random() * 0.35 + 0.25,
+          color: activeStarColors[Math.floor(Math.random() * activeStarColors.length)],
           twinkleSpeed: Math.random() * 0.03 + 0.01,
           twinklePhase: Math.random() * Math.PI * 2,
-          hasGlint: isForeground && Math.random() > 0.35,
+          hasGlint: isForeground && Math.random() > 0.4,
+          renderX: 0,
+          renderY: 0,
         });
       }
     };
@@ -191,20 +218,20 @@ const AIBackground: React.FC = () => {
       x: 0,
       y: 0,
       length: 120,
-      speed: 18,
+      speed: 16,
       angle: Math.PI / 4,
       alpha: 0,
       active: false,
     };
 
-    let shootingStarCooldown = Math.floor(Math.random() * 250) + 180;
+    let shootingStarCooldown = Math.floor(Math.random() * 280) + 200;
 
     const spawnShootingStar = () => {
       shootingStar.x = Math.random() * width * 0.8;
       shootingStar.y = Math.random() * height * 0.4;
-      shootingStar.angle = (Math.PI / 4) + (Math.random() - 0.5) * 0.3;
-      shootingStar.length = Math.random() * 100 + 80;
-      shootingStar.speed = Math.random() * 8 + 14;
+      shootingStar.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.3;
+      shootingStar.length = Math.random() * 110 + 70;
+      shootingStar.speed = Math.random() * 7 + 13;
       shootingStar.alpha = 1.0;
       shootingStar.active = true;
     };
@@ -232,12 +259,12 @@ const AIBackground: React.FC = () => {
       const mouseCanvasY = mouse.y * dpr;
       const mouseRadius = 130 * dpr;
 
-      // 1. RENDER & UPDATE STARS
+      // 1. UPDATE STAR POSITIONS & COMPUTE PARALLAX / WARP
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
 
-        // Cosmic autonomous drift (gentle ambient movement)
-        star.y += star.depth * 0.18;
+        // Cosmic autonomous drift
+        star.y += star.depth * 0.16;
         if (star.y > height) {
           star.y = 0;
           star.x = Math.random() * width;
@@ -254,10 +281,53 @@ const AIBackground: React.FC = () => {
 
         if (dist < mouseRadius && dist > 1) {
           const force = (mouseRadius - dist) / mouseRadius;
-          const push = force * 18 * star.depth;
+          const push = force * 16 * star.depth;
           renderX -= (dx / dist) * push;
           renderY -= (dy / dist) * push;
         }
+
+        star.renderX = renderX;
+        star.renderY = renderY;
+      }
+
+      // 2. DRAW LIGHT DELICATE CONSTELLATION CONNECTING LINES BETWEEN NEARBY STARS
+      const maxConnectionDist = 95 * dpr;
+      for (let i = 0; i < stars.length; i++) {
+        const p1 = stars[i];
+        let connections = 0;
+
+        for (let j = i + 1; j < stars.length; j++) {
+          if (connections >= 2) break; // Light, subtle network density
+          const p2 = stars[j];
+
+          // Connect stars that reside in roughly the same 3D depth plane
+          if (Math.abs(p1.depth - p2.depth) > 0.35) continue;
+
+          const cdx = p1.renderX - p2.renderX;
+          const cdy = p1.renderY - p2.renderY;
+          const cdist = Math.hypot(cdx, cdy);
+
+          if (cdist < maxConnectionDist) {
+            connections++;
+            // Very light line opacity
+            const alphaFactor = (1 - cdist / maxConnectionDist);
+            const lineAlpha = isDark ? alphaFactor * 0.12 : alphaFactor * 0.08;
+
+            ctx.beginPath();
+            ctx.moveTo(p1.renderX, p1.renderY);
+            ctx.lineTo(p2.renderX, p2.renderY);
+            ctx.strokeStyle = isDark
+              ? `rgba(255, 250, 230, ${lineAlpha})`
+              : `rgba(51, 65, 85, ${lineAlpha})`;
+            ctx.lineWidth = 0.65 * dpr;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. RENDER THE STARS (PURE WHITE & WARM WHITE)
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
 
         // Shimmering twinkle calculation
         const twinkle = Math.sin(time * 3 * star.twinkleSpeed * 100 + star.twinklePhase);
@@ -269,48 +339,51 @@ const AIBackground: React.FC = () => {
         ctx.save();
         ctx.globalAlpha = currentAlpha;
 
-        // Soft halo on brighter/closer stars
-        if (star.depth > 0.6) {
+        // Soft warm/white halo on brighter/closer stars
+        if (star.depth > 0.65) {
           const haloGrad = ctx.createRadialGradient(
-            renderX,
-            renderY,
+            star.renderX,
+            star.renderY,
             0,
-            renderX,
-            renderY,
-            star.radius * 3.5
+            star.renderX,
+            star.renderY,
+            star.radius * 3.2
           );
-          haloGrad.addColorStop(0, star.color);
+          haloGrad.addColorStop(
+            0,
+            isDark ? "rgba(255, 250, 220, 0.45)" : "rgba(30, 41, 59, 0.18)"
+          );
           haloGrad.addColorStop(1, "transparent");
           ctx.fillStyle = haloGrad;
           ctx.beginPath();
-          ctx.arc(renderX, renderY, star.radius * 3.5, 0, Math.PI * 2);
+          ctx.arc(star.renderX, star.renderY, star.radius * 3.2, 0, Math.PI * 2);
           ctx.fill();
         }
 
         // Star core
         ctx.fillStyle = star.color;
         ctx.beginPath();
-        ctx.arc(renderX, renderY, star.radius, 0, Math.PI * 2);
+        ctx.arc(star.renderX, star.renderY, star.radius, 0, Math.PI * 2);
         ctx.fill();
 
         // 4-Point Star Glint for prominent foreground stars
-        if (star.hasGlint && currentAlpha > 0.55) {
-          const glintLen = star.radius * (3.8 + twinkle * 1.2);
-          ctx.strokeStyle = star.color;
-          ctx.lineWidth = 0.8 * dpr;
+        if (star.hasGlint && currentAlpha > 0.52) {
+          const glintLen = star.radius * (3.5 + twinkle * 1.0);
+          ctx.strokeStyle = isDark ? "#ffffff" : "#1e293b";
+          ctx.lineWidth = 0.75 * dpr;
 
           ctx.beginPath();
-          ctx.moveTo(renderX - glintLen, renderY);
-          ctx.lineTo(renderX + glintLen, renderY);
-          ctx.moveTo(renderX, renderY - glintLen);
-          ctx.lineTo(renderX, renderY + glintLen);
+          ctx.moveTo(star.renderX - glintLen, star.renderY);
+          ctx.lineTo(star.renderX + glintLen, star.renderY);
+          ctx.moveTo(star.renderX, star.renderY - glintLen);
+          ctx.lineTo(star.renderX, star.renderY + glintLen);
           ctx.stroke();
         }
 
         ctx.restore();
       }
 
-      // 2. RENDER CURSOR STARDUST TRAIL
+      // 4. RENDER CURSOR STARDUST TRAIL (PURE WHITE & WARM WHITE)
       for (let i = stardustList.length - 1; i >= 0; i--) {
         const p = stardustList[i];
         p.life++;
@@ -340,9 +413,9 @@ const AIBackground: React.FC = () => {
         ctx.fill();
 
         // Sparkle glint cross
-        const sGlint = pSize * 2.2;
-        ctx.strokeStyle = p.color;
-        ctx.lineWidth = 0.9 * dpr;
+        const sGlint = pSize * 2.0;
+        ctx.strokeStyle = isDark ? "#ffffff" : "#1e293b";
+        ctx.lineWidth = 0.85 * dpr;
         ctx.beginPath();
         ctx.moveTo(-sGlint, 0);
         ctx.lineTo(sGlint, 0);
@@ -353,12 +426,12 @@ const AIBackground: React.FC = () => {
         ctx.restore();
       }
 
-      // 3. SHOOTING STARS / METEORS
+      // 5. SHOOTING STARS / METEORS (WARM WHITE & PURE WHITE)
       if (!shootingStar.active) {
         shootingStarCooldown--;
         if (shootingStarCooldown <= 0) {
           spawnShootingStar();
-          shootingStarCooldown = Math.floor(Math.random() * 320) + 220;
+          shootingStarCooldown = Math.floor(Math.random() * 320) + 240;
         }
       } else {
         shootingStar.x += Math.cos(shootingStar.angle) * shootingStar.speed * dpr;
@@ -386,19 +459,26 @@ const AIBackground: React.FC = () => {
             shootingStar.x,
             shootingStar.y
           );
-          meteorGrad.addColorStop(0, "rgba(34, 211, 238, 0)");
-          meteorGrad.addColorStop(0.7, "rgba(56, 189, 248, 0.6)");
-          meteorGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+
+          if (isDark) {
+            meteorGrad.addColorStop(0, "rgba(254, 240, 138, 0)");
+            meteorGrad.addColorStop(0.7, "rgba(255, 253, 245, 0.7)");
+            meteorGrad.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+          } else {
+            meteorGrad.addColorStop(0, "rgba(71, 85, 105, 0)");
+            meteorGrad.addColorStop(0.7, "rgba(30, 41, 59, 0.5)");
+            meteorGrad.addColorStop(1, "rgba(15, 23, 42, 0.9)");
+          }
 
           ctx.strokeStyle = meteorGrad;
-          ctx.lineWidth = 1.8 * dpr;
+          ctx.lineWidth = 1.7 * dpr;
           ctx.beginPath();
           ctx.moveTo(tailX, tailY);
           ctx.lineTo(shootingStar.x, shootingStar.y);
           ctx.stroke();
 
           // Meteor head glowing diamond
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
           ctx.beginPath();
           ctx.arc(shootingStar.x, shootingStar.y, 2.2 * dpr, 0, Math.PI * 2);
           ctx.fill();
@@ -418,16 +498,24 @@ const AIBackground: React.FC = () => {
       window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [theme]);
+  }, [isDark]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-      {/* Ambient Deep Space Cosmic Dust Nebulae */}
-      <div className="absolute -top-[20%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-cyan-600/10 blur-[140px] dark:bg-cyan-500/12 pointer-events-none" />
-      <div className="absolute top-[35%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-violet-600/10 blur-[150px] dark:bg-indigo-600/12 pointer-events-none" />
-      <div className="absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-emerald-600/6 blur-[160px] dark:bg-emerald-500/10 pointer-events-none" />
+    <div
+      className={cn(
+        "fixed inset-0 pointer-events-none -z-10 overflow-hidden transition-colors duration-500",
+        isDark ? "bg-[#000000]" : "bg-[#ffffff]"
+      )}
+    >
+      {/* Deep pure black background in dark mode with ultra-subtle warm celestial dusk */}
+      {isDark && (
+        <>
+          <div className="absolute -top-[25%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-amber-500/[0.025] blur-[160px] pointer-events-none" />
+          <div className="absolute -bottom-[20%] right-[10%] w-[55vw] h-[55vw] rounded-full bg-white/[0.015] blur-[170px] pointer-events-none" />
+        </>
+      )}
 
-      {/* Interactive 3D Stars & Stardust Canvas */}
+      {/* Interactive 3D Stars, Constellations & Stardust Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
     </div>
   );

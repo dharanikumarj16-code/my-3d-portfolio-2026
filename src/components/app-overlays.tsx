@@ -2,14 +2,14 @@
 
 import AIBackground from "@/components/ai-background";
 import EasterEggs from "@/components/easter-eggs";
-import ElasticCursor from "@/components/ui/ElasticCursor";
+import SpaceshipCursor from "@/components/ui/spaceship-cursor";
 
 export default function AppOverlays() {
   return (
     <>
       <AIBackground />
       <EasterEggs />
-      <ElasticCursor />
+      <SpaceshipCursor />
     </>
   );
 }

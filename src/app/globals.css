@@ -6,6 +6,15 @@ body {
   scroll-behavior: smooth;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  body, button, a, div, span, [role="button"], label {
+    cursor: none;
+  }
+  input, textarea {
+    cursor: text;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

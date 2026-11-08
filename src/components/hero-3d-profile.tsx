@@ -252,6 +252,7 @@ export const Hero3DProfile: React.FC<Hero3DProfileProps> = ({
             alt="Dharani Kumar J - AI & Data Science Engineer"
             fill
             priority
+            onError={() => setImageSrc("/assets/dharani-3d-portrait.jpg")}
             unoptimized={imageSrc.startsWith("http")}
             className="object-cover object-center w-full h-full transition-transform duration-500 group-hover:scale-[1.03]"
             sizes="(max-width: 768px) 80vw, 360px"

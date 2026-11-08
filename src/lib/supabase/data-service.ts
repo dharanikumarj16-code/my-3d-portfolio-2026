@@ -27,7 +27,7 @@ export async function getProfile(): Promise<ProfileRecord> {
         phone: staticConfig.phone,
         location: staticConfig.location,
         resume_url: staticConfig.resumeUrl,
-        avatar_url: "/assets/profile.png",
+        avatar_url: "/assets/dharani-3d-portrait.jpg",
         github_url: staticConfig.social.github,
         linkedin_url: staticConfig.social.linkedin,
       };
@@ -42,7 +42,7 @@ export async function getProfile(): Promise<ProfileRecord> {
       phone: staticConfig.phone,
       location: staticConfig.location,
       resume_url: staticConfig.resumeUrl,
-      avatar_url: "/assets/profile.png",
+      avatar_url: "/assets/dharani-3d-portrait.jpg",
       github_url: staticConfig.social.github,
       linkedin_url: staticConfig.social.linkedin,
     };

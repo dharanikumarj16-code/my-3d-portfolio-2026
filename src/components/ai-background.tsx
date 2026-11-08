@@ -127,6 +127,110 @@ const AIBackground: React.FC = () => {
 
     const activeStarColors = isDark ? DARK_STAR_COLORS : LIGHT_STAR_COLORS;
 
+    // Web Audio API Synthesizer for Energetic, Minimal Star Crashing & Cosmic Chimes
+    const audioCtxRef = { current: null as AudioContext | null };
+    let lastSoundTime = 0;
+
+    const playStarCrashSound = (type: "clash" | "meteor" = "clash", power = 1) => {
+      try {
+        const now = performance.now();
+        if (now - lastSoundTime < 130) return; // Rate limit to keep it tasteful & minimal
+        lastSoundTime = now;
+
+        if (!audioCtxRef.current) {
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          if (!AudioContextClass) return;
+          audioCtxRef.current = new AudioContextClass();
+        }
+
+        const ctx = audioCtxRef.current;
+        if (ctx.state === "suspended") {
+          ctx.resume();
+        }
+
+        const t = ctx.currentTime;
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        if (type === "meteor") {
+          // Energetic shooting star cosmic sweep: crystalline high harmonic glissando
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(2200, t);
+          osc1.frequency.exponentialRampToValueAtTime(700, t + 0.3);
+
+          osc2.type = "triangle";
+          osc2.frequency.setValueAtTime(1550, t);
+          osc2.frequency.exponentialRampToValueAtTime(450, t + 0.26);
+
+          const vol = Math.min(0.045 * power, 0.07);
+          gainNode.gain.setValueAtTime(0.001, t);
+          gainNode.gain.linearRampToValueAtTime(vol, t + 0.015);
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+
+          osc1.connect(gainNode);
+          osc2.connect(gainNode);
+          gainNode.connect(ctx.destination);
+
+          osc1.start(t);
+          osc2.start(t);
+          osc1.stop(t + 0.33);
+          osc2.stop(t + 0.33);
+        } else {
+          // Minimal crisp crystalline star collision / glass sparkle ping
+          const baseFreq = 1800 + Math.random() * 650;
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(baseFreq, t);
+          osc1.frequency.exponentialRampToValueAtTime(baseFreq * 0.52, t + 0.16);
+
+          osc2.type = "triangle";
+          osc2.frequency.setValueAtTime(baseFreq * 1.5, t);
+          osc2.frequency.exponentialRampToValueAtTime(baseFreq * 0.78, t + 0.12);
+
+          const vol = Math.min(0.038 * power, 0.06);
+          gainNode.gain.setValueAtTime(0.001, t);
+          gainNode.gain.linearRampToValueAtTime(vol, t + 0.005);
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+
+          osc1.connect(gainNode);
+          osc2.connect(gainNode);
+          gainNode.connect(ctx.destination);
+
+          osc1.start(t);
+          osc2.start(t);
+          osc1.stop(t + 0.19);
+          osc2.stop(t + 0.19);
+        }
+      } catch {
+        // Ignored if browser blocks audio prior to user gesture
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      playStarCrashSound("clash", 1.3);
+      for (let k = 0; k < 10; k++) {
+        if (stardustList.length < MAX_STARDUST + 16) {
+          const a = (k / 10) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+          const spd = Math.random() * 3.2 + 1.2;
+          stardustList.push({
+            x: e.clientX,
+            y: e.clientY,
+            vx: Math.cos(a) * spd,
+            vy: Math.sin(a) * spd,
+            size: Math.random() * 2.2 + 1.2,
+            color: activeStarColors[Math.floor(Math.random() * activeStarColors.length)],
+            alpha: 1.0,
+            maxLife: 30,
+            life: 0,
+            rotation: Math.random() * Math.PI,
+            rotSpeed: (Math.random() - 0.5) * 0.2,
+          });
+        }
+      }
+    };
+
+    window.addEventListener("click", handleClick);
+
     const handleMouseMove = (e: MouseEvent) => {
       const clientX = e.clientX;
       const clientY = e.clientY;
@@ -234,6 +338,7 @@ const AIBackground: React.FC = () => {
       shootingStar.speed = Math.random() * 7 + 13;
       shootingStar.alpha = 1.0;
       shootingStar.active = true;
+      playStarCrashSound("meteor", 0.85);
     };
 
     let time = 0;
@@ -284,6 +389,12 @@ const AIBackground: React.FC = () => {
           const push = force * 16 * star.depth;
           renderX -= (dx / dist) * push;
           renderY -= (dy / dist) * push;
+
+          // Energetic star clash chime when cursor grazes close to a star with velocity
+          const cursorSpeed = Math.hypot(mouse.vx, mouse.vy);
+          if (dist < 34 * dpr && cursorSpeed > 3.8 && star.depth > 0.6) {
+            playStarCrashSound("clash", Math.min(cursorSpeed / 6, 1.2));
+          }
         }
 
         star.renderX = renderX;
@@ -496,7 +607,9 @@ const AIBackground: React.FC = () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationFrameId);
+      audioCtxRef.current?.close().catch(() => {});
     };
   }, [isDark]);
 

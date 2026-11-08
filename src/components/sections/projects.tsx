@@ -127,6 +127,31 @@ const imageExtensions: Record<string, string> = {
   autosilentpro: "jpg",
 };
 
+const availableTechIcons: Record<string, string> = {
+  git: "/assets/tech/git.svg",
+  python: "/assets/tech/python.svg",
+  kotlin: "/assets/tech/kotlin.svg",
+  javascript: "/assets/tech/javascript.svg",
+  typescript: "/assets/tech/typescript.svg",
+  nextjs: "/assets/tech/nextjs.svg",
+  react: "/assets/tech/react.svg",
+  tailwindcss: "/assets/tech/tailwindcss.svg",
+  firebase: "/assets/tech/firebase.svg",
+  mongodb: "/assets/tech/mongodb.svg",
+  numpy: "/assets/tech/numpy.png",
+  colab: "/assets/tech/colab.png",
+  cpp: "/assets/tech/cpp.png",
+  huggingface: "/assets/tech/huggingface.png",
+  render: "/assets/tech/render.png",
+  sql: "/assets/tech/sql.png",
+  seaborn: "/assets/tech/seaborn.png",
+  vscode: "/assets/tech/vscode.png",
+  leetcode: "/assets/tech/leetcode.png",
+  gsap: "/assets/tech/gsap.svg",
+  sass: "/assets/tech/sass.svg",
+  redux: "/assets/tech/redux.svg",
+};
+
 const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -185,6 +210,7 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
         <Image
           src={imageSrc}
           alt={project.name}
+          unoptimized={typeof imageSrc === "string" && imageSrc.startsWith("http")}
           className={cn(
             "absolute top-0 bottom-auto left-auto rounded-xl shadow-xl object-contain",
             "w-[12rem] sm:w-[15rem] md:w-[17rem]",
@@ -202,7 +228,7 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
           <div
             className="absolute bottom-0 left-0 w-full h-20"
             style={{
-              background: `linear-gradient(0deg, ${project.gradient[0]} 10%, rgba(0,0,0,0) 100%)`,
+              background: `linear-gradient(0deg, ${gradientColors[0]} 10%, rgba(0,0,0,0) 100%)`,
             }}
           />
         )}
@@ -220,16 +246,21 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
           style={{ transform: "rotate(-22.5deg) translateZ(3rem)" }}
         >
           <div className="flex flex-col pb-8">
-            {project.tech?.map((el: string, i: number) => (
-              <Image
-                className={`${i % 2 === 0 && "ml-16"} mb-4`}
-                src={`/assets/tech/${el}.svg`}
-                alt={el}
-                height={45}
-                width={45}
-                key={el}
-              />
-            ))}
+            {project.tech
+              ?.filter((el: string) => availableTechIcons[el.toLowerCase().trim()])
+              .map((el: string, i: number) => {
+                const iconSrc = availableTechIcons[el.toLowerCase().trim()];
+                return (
+                  <Image
+                    className={`${i % 2 === 0 && "ml-16"} mb-4`}
+                    src={iconSrc}
+                    alt={el}
+                    height={45}
+                    width={45}
+                    key={el}
+                  />
+                );
+              })}
           </div>
         </div>
         <h2

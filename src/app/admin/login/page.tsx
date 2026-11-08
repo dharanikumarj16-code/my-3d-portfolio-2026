@@ -20,8 +20,8 @@ export default function AdminLoginPage() {
     try {
       const supabase = createClient();
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: email.trim(),
+        password: password.trim(),
       });
 
       if (error) {

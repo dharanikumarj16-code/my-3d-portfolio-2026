@@ -21,7 +21,7 @@ const ExperienceSection = () => {
           setExperienceList(data);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -117,7 +117,7 @@ const ExperienceSection = () => {
                         className={cn(
                           "flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed",
                           isCertLine &&
-                            "p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-cyan-200 mt-3 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                          "p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-cyan-200 mt-3 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]"
                         )}
                       >
                         {isCertLine ? (

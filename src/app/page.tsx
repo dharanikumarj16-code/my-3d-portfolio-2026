@@ -3,7 +3,6 @@
 import React from "react";
 import SmoothScroll from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
-import AIBackground from "@/components/ai-background";
 import SkillsSection from "@/components/sections/skills";
 import ExperienceSection from "@/components/sections/experience";
 import ProjectsSection from "@/components/sections/projects";
@@ -38,8 +37,7 @@ function MainPage() {
           }),
         }}
       />
-      <AIBackground />
-      <main className={cn("bg-slate-100 dark:bg-transparent canvas-overlay-mode")}>
+      <main className={cn("bg-transparent canvas-overlay-mode")}>
         <HeroSection />
         <SkillsSection />
         <ExperienceSection />

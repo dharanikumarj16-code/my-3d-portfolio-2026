@@ -29,7 +29,7 @@ const HeroSection = () => {
         if (p?.resume_url) setResumeUrl(p.resume_url);
         if (p?.role) setProfileData((prev) => ({ ...prev, role: p.role }));
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (

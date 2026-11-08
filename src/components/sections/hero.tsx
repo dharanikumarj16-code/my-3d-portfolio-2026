@@ -123,6 +123,11 @@ const HeroSection = () => {
                 {/* Tertiary CTA: Contact */}
                 <Link
                   href="#contact"
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(new CustomEvent("rocket-fly-to-contact"));
+                    }
+                  }}
                   className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-t-white/10 border-x-slate-800/80 border-b-black/80 font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.4)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-slate-400" />

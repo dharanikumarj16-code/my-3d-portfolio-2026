@@ -14,6 +14,7 @@ import {
   ModalTrigger,
   useModal,
 } from "../ui/animated-modal";
+import { ArrowUp } from "lucide-react";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -23,6 +24,21 @@ function Footer() {
         © {year} {config.author}. All rights reserved.
       </p>
       <SocialMediaButtons />
+      <div className="flex items-center gap-4 z-10">
+        <button
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.dispatchEvent(new CustomEvent("rocket-back-to-top"));
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 hover:border-cyan-400 text-xs font-semibold text-slate-300 hover:text-cyan-300 shadow-[0_4px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+          title="Boost to Top with Rocket"
+        >
+          <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />
+          <span>Top</span>
+        </button>
+      </div>
       <nav className="flex gap-4 sm:gap-6 z-10">
         {footer.map((link, index) => {
           const { title, href } = link;

@@ -370,3 +370,4 @@ export const SpaceshipCursor: React.FC = () => {
 };
 
 export default SpaceshipCursor;
+

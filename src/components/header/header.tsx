@@ -87,6 +87,11 @@ const Header = ({ loader }: HeaderProps) => {
           </Link>
           <Link
             href="/#contact"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("rocket-fly-to-contact"));
+              }
+            }}
             className="!static px-3.5 py-1 text-xs font-bold text-cyan-300 bg-cyan-950/70 border border-t-white/20 border-cyan-700/60 border-b-cyan-950 rounded-full shadow-[0_3px_10px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(255,255,255,0.3)] hover:bg-cyan-900/50 hover:shadow-[0_4px_14px_rgba(6,182,212,0.4)] transition-all active:scale-95 cursor-pointer"
           >
             Contact

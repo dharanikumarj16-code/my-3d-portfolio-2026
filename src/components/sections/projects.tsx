@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { PROJECTS, SimpleProject } from "@/data/projects";
+import { getProjects } from "@/lib/supabase/data-service";
 
 const tiltOptions = {
   max: 5,
@@ -18,8 +19,19 @@ const tiltOptions = {
 
 const ProjectsSection = () => {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [projectList, setProjectList] = useState<any[]>(PROJECTS);
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getProjects()
+      .then((data) => {
+        if (data && data.length > 0) {
+          setProjectList(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 768px)");
@@ -91,9 +103,9 @@ const ProjectsSection = () => {
           ref={trackRef}
           className="flex gap-8 overflow-visible pb-6 snap-x snap-mandatory w-max"
         >
-          {PROJECTS.map((project) => (
+          {projectList.map((project) => (
             <ProjectCard
-              key={project.name}
+              key={project.id || project.name}
               project={project}
               isDesktop={isDesktop}
             />
@@ -105,7 +117,7 @@ const ProjectsSection = () => {
 };
 
 type ProjectCardProps = {
-  project: SimpleProject;
+  project: any;
   isDesktop: boolean;
 };
 
@@ -125,9 +137,15 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
     });
   }, []);
 
-  const imageSrc = `/assets/projects-screenshots/${project.imageKey}.${
-    imageExtensions[project.imageKey] ?? "png"
-  }`;
+  const imageSrc =
+    project.image_url ||
+    (project.imageKey
+      ? `/assets/projects-screenshots/${project.imageKey}.${
+          imageExtensions[project.imageKey] ?? "png"
+        }`
+      : "/assets/projects-screenshots/jarvis.jpg");
+
+  const gradientColors = project.gradient || ["#0b2b1a", "#10b981"];
 
   return (
     <a
@@ -155,7 +173,7 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
           "[transform-style:preserve-3d] [transform:perspective(1000px)] overflow-hidden"
         )}
         style={{
-          background: `linear-gradient(90deg, ${project.gradient[0]} 0%, ${project.gradient[1]} 100%)`,
+          background: `linear-gradient(90deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 100%)`,
         }}
       >
         <Image
@@ -202,7 +220,7 @@ const ProjectCard = ({ project, isDesktop }: ProjectCardProps) => {
           style={{ transform: "rotate(-22.5deg) translateZ(3rem)" }}
         >
           <div className="flex flex-col pb-8">
-            {project.tech.map((el, i) => (
+            {project.tech?.map((el: string, i: number) => (
               <Image
                 className={`${i % 2 === 0 && "ml-16"} mb-4`}
                 src={`/assets/tech/${el}.svg`}

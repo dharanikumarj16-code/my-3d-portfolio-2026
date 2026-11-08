@@ -119,3 +119,4 @@ export function teardownWebGLInstance(
     (renderer as any).domElement = null;
   }
 }
+

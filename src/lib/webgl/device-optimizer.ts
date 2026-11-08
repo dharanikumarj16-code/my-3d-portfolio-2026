@@ -105,3 +105,4 @@ export function tuneExistingRenderer(renderer: THREE.WebGLRenderer): WebGLQualit
 
   return config;
 }
+

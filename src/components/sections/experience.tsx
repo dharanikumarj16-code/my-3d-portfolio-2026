@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { EXPERIENCE, SkillNames, SKILLS } from "@/data/constants";
+import { getExperiences } from "@/lib/supabase/data-service";
 import { SectionHeader } from "./section-header";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
@@ -7,6 +11,18 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ExperienceSection = () => {
+  const [experienceList, setExperienceList] = useState<any[]>(EXPERIENCE);
+
+  useEffect(() => {
+    getExperiences()
+      .then((data) => {
+        if (data && data.length > 0) {
+          setExperienceList(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <SectionWrapper
       id="experience"
@@ -23,15 +39,15 @@ const ExperienceSection = () => {
         <div
           className="relative flex flex-col gap-8 md:block"
           style={{
-            minHeight: `calc(${EXPERIENCE.length} * 70vh)`,
+            minHeight: `calc(${experienceList.length} * 70vh)`,
           }}
         >
-          {EXPERIENCE.map((exp, index) => (
+          {experienceList.map((exp, index) => (
             <ExperienceCard
-              key={exp.id}
+              key={exp.id || index}
               experience={exp}
               index={index}
-              total={EXPERIENCE.length}
+              total={experienceList.length}
             />
           ))}
         </div>
@@ -44,10 +60,14 @@ const ExperienceCard = ({
   experience,
   index,
 }: {
-  experience: (typeof EXPERIENCE)[0];
+  experience: any;
   index: number;
   total: number;
 }) => {
+  const roleTitle = experience.title || experience.role;
+  const periodText = experience.period || `${experience.startDate} - ${experience.endDate}`;
+  const descriptions = experience.description || [];
+
   return (
     <motion.div
       className="sticky top-40 md:top-52 max-w-3xl"
@@ -75,7 +95,7 @@ const ExperienceCard = ({
           <div className="flex flex-row items-start justify-between gap-4">
             <div className="space-y-1">
               <CardTitle className="text-xl font-bold tracking-tight">
-                {experience.title}
+                {roleTitle}
               </CardTitle>
               <div className="text-base font-medium text-muted-foreground">
                 {experience.company}
@@ -85,36 +105,39 @@ const ExperienceCard = ({
               variant="secondary"
               className="w-fit font-mono text-xs font-normal"
             >
-              {experience.startDate} - {experience.endDate}
+              {periodText}
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
           <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
-            {experience.description.map((point, i) => (
+            {descriptions.map((point: string, i: number) => (
               <li key={i}>{point}</li>
             ))}
           </ul>
 
-          <div className="flex flex-wrap gap-2">
-            {experience.skills.map((skillName) => {
-              const skill = SKILLS[skillName as SkillNames];
-              return (
-                <Badge
-                  key={skillName}
-                  variant="outline"
-                  className="gap-2 text-xs font-normal bg-secondary/30 hover:bg-secondary/50 transition-colors border-transparent"
-                >
-                  <img
-                    src={skill.icon}
-                    alt={skill.label}
-                    className="w-3.5 h-3.5 object-contain opacity-80"
-                  />
-                  {skill.label}
-                </Badge>
-              );
-            })}
-          </div>
+          {experience.skills && experience.skills.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {experience.skills.map((skillName: string) => {
+                const skill = SKILLS[skillName as SkillNames];
+                if (!skill) return null;
+                return (
+                  <Badge
+                    key={skillName}
+                    variant="outline"
+                    className="gap-2 text-xs font-normal bg-secondary/30 hover:bg-secondary/50 transition-colors border-transparent"
+                  >
+                    <img
+                      src={skill.icon}
+                      alt={skill.label}
+                      className="w-3.5 h-3.5 object-contain opacity-80"
+                    />
+                    {skill.label}
+                  </Badge>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
     </motion.div>

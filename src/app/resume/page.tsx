@@ -32,15 +32,15 @@ export default async function ResumePage() {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-900 border border-t-white/15 border-x-slate-800 border-b-black/80 hover:bg-slate-800 text-slate-200 shadow-[0_4px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all cursor-pointer"
             >
-              <ExternalLink size={14} />
+              <ExternalLink size={14} className="text-cyan-400" />
               Open PDF
             </a>
             <a
               href={resumeUrl}
               download="Dharani_Kumar_J_Resume.pdf"
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:opacity-90 shadow-lg shadow-primary/20 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 shadow-[0_6px_18px_rgba(6,182,212,0.35),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all cursor-pointer"
             >
               <Download size={14} />
               Download Resume
@@ -48,8 +48,8 @@ export default async function ResumePage() {
           </div>
         </div>
 
-        {/* Paper Document Container */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-10 shadow-2xl space-y-8">
+        {/* Paper Document Container with 3D Slab Depth */}
+        <div className="bg-slate-900/90 border border-t-white/10 border-x-slate-800 border-b-black/80 rounded-3xl p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.6)] space-y-8">
           {/* Header */}
           <div className="border-b border-zinc-800 pb-6">
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white uppercase mb-1">

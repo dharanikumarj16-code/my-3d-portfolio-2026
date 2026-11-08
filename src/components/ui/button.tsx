@@ -12,15 +12,19 @@ import {
 } from "react";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-input bg-background",
-        secondary: "bg-secondary text-secondary-foreground",
-        ghost: "",
+        default:
+          "bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_1px_2px_rgba(0,0,0,0.8)]",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-[0_4px_12px_rgba(239,68,68,0.3)] hover:-translate-y-0.5 active:translate-y-0.5",
+        outline:
+          "border border-input bg-background shadow-sm hover:border-slate-600 hover:-translate-y-0.5 active:translate-y-0.5",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:-translate-y-0.5 active:translate-y-0.5",
+        ghost: "hover:bg-accent hover:text-accent-foreground active:scale-[0.98]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

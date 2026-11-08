@@ -42,12 +42,12 @@ const HeroSection = () => {
         <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left z-20">
           {!isLoading && (
             <>
-              {/* Availability Status Pill */}
+              {/* Availability Status Pill with 3D physical depth */}
               <BlurIn delay={0.3}>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 backdrop-blur-md text-cyan-300 text-xs font-mono mb-6 shadow-sm shadow-cyan-500/10">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-t-white/20 border-x-slate-800 border-b-black/80 bg-slate-900/90 backdrop-blur-md text-cyan-300 text-xs font-mono mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.5)]">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
                   </span>
                   <span>Available for AI / ML &amp; Software Roles</span>
                 </div>
@@ -77,30 +77,30 @@ const HeroSection = () => {
                 </p>
               </BlurIn>
 
-              {/* Credential / Highlight Badges */}
+              {/* Credential / Highlight 3D Badges */}
               <BlurIn delay={1.1}>
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mt-6">
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-300">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
                     <span>SKCET • B.Tech AI &amp; DS</span>
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-300">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <Terminal className="w-3.5 h-3.5 text-teal-400" />
                     <span>ML Pipelines &amp; NLP</span>
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-300">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 text-xs font-mono text-slate-200 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
                     <Code2 className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Python • C++ • Cloud</span>
                   </div>
                 </div>
               </BlurIn>
 
-              {/* Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 w-full sm:w-auto">
+              {/* Action Buttons in Physical 3D */}
+              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3.5 w-full sm:w-auto">
                 {/* Primary CTA: Explore Projects */}
                 <Link
                   href="#projects"
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_22px_rgba(6,182,212,0.35),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-3px_0_rgba(0,0,0,0.3)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Explore Projects</span>
@@ -112,7 +112,7 @@ const HeroSection = () => {
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-800 hover:border-slate-700 font-medium text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-t-white/15 border-x-slate-800 border-b-black/80 font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.5)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                 >
                   <FileText className="w-4 h-4 text-cyan-400" />
                   <span>View Resume</span>
@@ -121,21 +121,21 @@ const HeroSection = () => {
                 {/* Tertiary CTA: Contact */}
                 <Link
                   href="#contact"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-900/50 hover:bg-slate-800/80 text-slate-300 border border-slate-800/70 font-medium text-sm flex items-center justify-center gap-2 transition-all active:scale-95"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-t-white/10 border-x-slate-800/80 border-b-black/80 font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_0_rgba(0,0,0,0.4)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-slate-400" />
                   <span>Contact Me</span>
                 </Link>
               </div>
 
-              {/* Social Media Pill Bar */}
-              <div className="mt-6 flex items-center justify-center lg:justify-start gap-2.5">
-                <span className="text-xs text-slate-500 font-mono mr-1">Connect:</span>
+              {/* Social Media 3D Keycap Bar */}
+              <div className="mt-7 flex items-center justify-center lg:justify-start gap-2.5">
+                <span className="text-xs text-slate-400 font-mono mr-1">Connect:</span>
                 <a
                   href={config.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-white hover:bg-slate-800 transition-all shadow-sm"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 text-slate-300 hover:text-white shadow-[0_4px_10px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.6)] hover:border-cyan-500/50 hover:shadow-[0_8px_20px_rgba(6,182,212,0.25)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                   title="GitHub Profile"
                   aria-label="GitHub Profile"
                 >
@@ -145,7 +145,7 @@ const HeroSection = () => {
                   href={config.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-white hover:bg-slate-800 transition-all shadow-sm"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 text-slate-300 hover:text-white shadow-[0_4px_10px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.6)] hover:border-cyan-500/50 hover:shadow-[0_8px_20px_rgba(6,182,212,0.25)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                   title="LinkedIn Profile"
                   aria-label="LinkedIn Profile"
                 >
@@ -156,7 +156,7 @@ const HeroSection = () => {
                     href={config.social.leetcode}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-white hover:bg-slate-800 transition-all shadow-sm"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 text-slate-300 hover:text-white shadow-[0_4px_10px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.6)] hover:border-cyan-500/50 hover:shadow-[0_8px_20px_rgba(6,182,212,0.25)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                     title="LeetCode Profile"
                     aria-label="LeetCode Profile"
                   >
@@ -165,7 +165,7 @@ const HeroSection = () => {
                 )}
                 <a
                   href={`mailto:${config.email}`}
-                  className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-white hover:bg-slate-800 transition-all shadow-sm"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-900/90 border border-t-white/20 border-x-slate-800 border-b-black/80 text-slate-300 hover:text-white shadow-[0_4px_10px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.6)] hover:border-cyan-500/50 hover:shadow-[0_8px_20px_rgba(6,182,212,0.25)] hover:-translate-y-1 active:translate-y-0.5 active:shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
                   title="Send Direct Email"
                   aria-label="Send Direct Email"
                 >

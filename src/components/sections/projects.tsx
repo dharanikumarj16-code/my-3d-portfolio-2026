@@ -8,6 +8,7 @@ import { PROJECTS, SimpleProject } from "@/data/projects";
 import { getProjects } from "@/lib/supabase/data-service";
 import { ExternalLink, Sparkles, CheckCircle2 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import { Card3D } from "../ui/card-3d";
 
 const imageExtensions: Record<string, string> = {
   smartfarm: "png",
@@ -111,40 +112,50 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
   const hasLiveDemo = liveUrl && !liveUrl.includes("github.com");
 
   return (
-    <div
+    <Card3D
+      maxTilt={8}
+      depth={14}
+      glare={true}
       className={cn(
-        "group relative flex flex-col justify-between rounded-3xl overflow-hidden",
-        "bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40",
-        "shadow-xl hover:shadow-[0_10px_40px_rgba(6,182,212,0.12)]",
-        "backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5"
+        "group relative flex flex-col justify-between rounded-3xl overflow-hidden h-full",
+        "bg-slate-900/75 border border-slate-800/90 hover:border-cyan-500/50",
+        "shadow-[0_12px_30px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.8)]",
+        "backdrop-blur-xl"
       )}
     >
-      {/* Top Ambient Glow Accent */}
+      {/* Top Ambient 3D Rim Glow */}
       <div
-        className="absolute top-0 inset-x-0 h-1 pointer-events-none opacity-80"
+        className="absolute top-0 inset-x-0 h-1 pointer-events-none opacity-90"
         style={{
           background: `linear-gradient(90deg, ${project.gradient?.[0] || "#0891b2"}, ${
             project.gradient?.[1] || "#14b8a6"
           })`,
+          transform: "translateZ(10px)",
         }}
       />
 
       <div>
-        {/* Mockup Frame Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800/80 bg-slate-950/50">
+        {/* Mockup Frame Header in 3D Relief */}
+        <div
+          className="flex items-center justify-between px-5 py-3 border-b border-slate-800/80 bg-slate-950/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+          style={{ transform: "translateZ(8px)" }}
+        >
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 shadow-[0_0_6px_rgba(239,68,68,0.5)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.5)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
           </div>
           <span className="text-[11px] font-mono text-slate-400 truncate max-w-[180px]">
             {project.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}.ai
           </span>
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#22d3ee]" />
         </div>
 
-        {/* Project Screenshot Container with Hover Zoom */}
-        <div className="relative w-full h-52 sm:h-56 bg-slate-950 overflow-hidden border-b border-slate-800/60">
+        {/* Project Screenshot Container with Depth */}
+        <div
+          className="relative w-full h-52 sm:h-56 bg-slate-950 overflow-hidden border-b border-slate-800/60"
+          style={{ transform: "translateZ(6px)" }}
+        >
           <Image
             src={imageSrc}
             alt={project.name}
@@ -154,22 +165,25 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           />
           {/* Subtle vignette gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent pointer-events-none" />
 
-          {/* Status Badge */}
-          <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-cyan-500/30 text-[11px] font-mono text-cyan-300 shadow-md">
+          {/* Floating 3D Status Badge */}
+          <div
+            className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/90 backdrop-blur-md border border-cyan-500/40 text-[11px] font-mono text-cyan-300 shadow-[0_4px_12px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
+            style={{ transform: "translateZ(14px)" }}
+          >
             <Sparkles className="w-3 h-3 text-cyan-400" />
             <span>{hasLiveDemo ? "Live Deployment" : "Open Source"}</span>
           </div>
         </div>
 
-        {/* Content Body */}
-        <div className="p-6">
+        {/* Content Body with Parallax Depth */}
+        <div className="p-6" style={{ transform: "translateZ(12px)" }}>
           <h3 className="text-xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors">
             {project.name}
           </h3>
 
-          <p className="text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed line-clamp-3">
+          <p className="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed line-clamp-3">
             {project.description}
           </p>
 
@@ -179,7 +193,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
               {project.highlights.slice(0, 2).map((highlight, hIdx) => (
                 <li
                   key={hIdx}
-                  className="flex items-start gap-2 text-[12px] text-slate-300 leading-snug"
+                  className="flex items-start gap-2 text-[12px] text-slate-200 leading-snug"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
                   <span>{highlight}</span>
@@ -188,7 +202,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             </ul>
           )}
 
-          {/* Tech Stack Pills */}
+          {/* 3D Tech Stack Pills */}
           <div className="flex flex-wrap items-center gap-1.5 mt-5">
             {project.tech?.map((techName) => {
               const cleanTech = techName.toLowerCase().trim();
@@ -197,7 +211,8 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
               return (
                 <span
                   key={techName}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700/60 text-[11px] font-mono text-cyan-200"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-[11px] font-mono text-cyan-200 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-0.5"
+                  style={{ transform: "translateZ(6px)" }}
                 >
                   {iconSrc && (
                     <img
@@ -214,14 +229,17 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         </div>
       </div>
 
-      {/* Card Action Buttons Footer */}
-      <div className="p-6 pt-0 mt-2 flex items-center gap-3">
+      {/* Card Action Buttons with 3D tactile press */}
+      <div
+        className="p-6 pt-0 mt-2 flex items-center gap-3 relative z-20"
+        style={{ transform: "translateZ(16px)" }}
+      >
         {hasLiveDemo && (
           <a
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-semibold text-xs flex items-center justify-center gap-2 shadow-md shadow-cyan-500/20 active:scale-95 transition-all"
+            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-[0_6px_16px_rgba(6,182,212,0.3),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.3)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-all cursor-pointer"
           >
             <span>Live Demo</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -233,7 +251,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 font-medium text-xs flex items-center justify-center gap-2 border border-slate-700 transition-all active:scale-95",
+            "py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-100 font-semibold text-xs flex items-center justify-center gap-2 border border-slate-700/80 shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.4)] active:translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.6)] transition-all cursor-pointer",
             hasLiveDemo ? "w-auto" : "flex-1"
           )}
           title="View GitHub Repository"
@@ -242,7 +260,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           <span>{hasLiveDemo ? "Code" : "View on GitHub"}</span>
         </a>
       </div>
-    </div>
+    </Card3D>
   );
 };
 

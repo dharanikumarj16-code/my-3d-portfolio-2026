@@ -53,41 +53,41 @@ const Header = ({ loader }: HeaderProps) => {
           </Button>
         </Link>
 
-        {/* Desktop Quick Nav Pill */}
-        <nav className="hidden lg:flex items-center gap-1 mx-auto px-2 py-1 rounded-full border border-slate-800/80 bg-slate-950/70 backdrop-blur-md shadow-lg shadow-black/20">
+        {/* Desktop Quick Nav 3D Floating Capsule */}
+        <nav className="hidden lg:flex items-center gap-1.5 mx-auto px-2.5 py-1.5 rounded-full border border-t-white/15 border-x-slate-800 border-b-black/80 bg-slate-950/80 backdrop-blur-xl shadow-[0_8px_20px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-2px_0_rgba(0,0,0,0.6)]">
           <Link
             href="/#projects"
-            className="!static px-3 py-1 text-xs font-medium text-slate-300 hover:text-cyan-400 rounded-full hover:bg-slate-900/80 transition-colors"
+            className="!static px-3 py-1 text-xs font-semibold text-slate-300 hover:text-cyan-300 rounded-full hover:bg-slate-900/90 shadow-[inset_0_1px_0_transparent] hover:shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all active:scale-95 cursor-pointer"
           >
             Projects
           </Link>
           <Link
             href="/#skills"
-            className="!static px-3 py-1 text-xs font-medium text-slate-300 hover:text-cyan-400 rounded-full hover:bg-slate-900/80 transition-colors"
+            className="!static px-3 py-1 text-xs font-semibold text-slate-300 hover:text-cyan-300 rounded-full hover:bg-slate-900/90 shadow-[inset_0_1px_0_transparent] hover:shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all active:scale-95 cursor-pointer"
           >
             Skills
           </Link>
           <Link
             href="/#experience"
-            className="!static px-3 py-1 text-xs font-medium text-slate-300 hover:text-cyan-400 rounded-full hover:bg-slate-900/80 transition-colors"
+            className="!static px-3 py-1 text-xs font-semibold text-slate-300 hover:text-cyan-300 rounded-full hover:bg-slate-900/90 shadow-[inset_0_1px_0_transparent] hover:shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all active:scale-95 cursor-pointer"
           >
             Experience
           </Link>
           <Link
             href="/about"
-            className="!static px-3 py-1 text-xs font-medium text-slate-300 hover:text-cyan-400 rounded-full hover:bg-slate-900/80 transition-colors"
+            className="!static px-3 py-1 text-xs font-semibold text-slate-300 hover:text-cyan-300 rounded-full hover:bg-slate-900/90 shadow-[inset_0_1px_0_transparent] hover:shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all active:scale-95 cursor-pointer"
           >
             About
           </Link>
           <Link
             href="/resume"
-            className="!static px-3 py-1 text-xs font-medium text-slate-300 hover:text-cyan-400 rounded-full hover:bg-slate-900/80 transition-colors"
+            className="!static px-3 py-1 text-xs font-semibold text-slate-300 hover:text-cyan-300 rounded-full hover:bg-slate-900/90 shadow-[inset_0_1px_0_transparent] hover:shadow-[0_2px_6px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all active:scale-95 cursor-pointer"
           >
             Resume
           </Link>
           <Link
             href="/#contact"
-            className="!static px-3 py-1 text-xs font-medium text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 border border-cyan-800/50 rounded-full hover:bg-cyan-900/40 transition-colors"
+            className="!static px-3.5 py-1 text-xs font-bold text-cyan-300 bg-cyan-950/70 border border-t-white/20 border-cyan-700/60 border-b-cyan-950 rounded-full shadow-[0_3px_10px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(255,255,255,0.3)] hover:bg-cyan-900/50 hover:shadow-[0_4px_14px_rgba(6,182,212,0.4)] transition-all active:scale-95 cursor-pointer"
           >
             Contact
           </Link>
@@ -106,7 +106,7 @@ const Header = ({ loader }: HeaderProps) => {
             onClick={() => setIsActive(!isActive)}
             className={cn(
               styles.el,
-              "m-0 p-0 h-6 bg-transparent flex items-center justify-center cursor-pointer"
+              "m-0 p-0 h-8 px-3 rounded-xl bg-slate-900/80 border border-t-white/15 border-x-slate-800 border-b-black/80 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] flex items-center justify-center cursor-pointer active:translate-y-0.5"
             )}
           >
             <div className="relative hidden md:flex items-center">

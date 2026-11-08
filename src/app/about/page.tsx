@@ -156,15 +156,17 @@ function Page() {
                 {CONTACT_LINKS.map((link) => (
                   <li key={link.name}>
                     <a
-                      className="flex items-center px-3 gap-3 w-full h-14 border-zinc-700 bg-zinc-800 hover:border-zinc-600 border rounded-md transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
+                      className="flex items-center px-3.5 gap-3 w-full h-14 border border-t-white/15 border-x-slate-800 border-b-black/80 bg-slate-900/90 hover:border-cyan-500/50 rounded-xl shadow-[0_4px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_20px_rgba(6,182,212,0.2)] hover:-translate-y-1 active:translate-y-0.5 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 cursor-pointer"
                       href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <div className="w-8 flex items-center justify-center text-lg">
+                      <div className="w-8 flex items-center justify-center text-lg text-cyan-400">
                         {link.icon}
                       </div>
                       <div className="flex flex-col">
-                        <div className="text-sm sm:text-base">{link.name}</div>
-                        <div className="text-xs text-zinc-500 truncate">
+                        <div className="text-sm sm:text-base font-semibold text-white">{link.name}</div>
+                        <div className="text-xs text-slate-400 truncate">
                           {link.content}
                         </div>
                       </div>
@@ -241,10 +243,10 @@ function Page() {
                   >
                     {TOOLS.map((tool) => (
                       <SplideSlide key={tool.name}>
-                        <div className="flex flex-col rounded-lg border border-zinc-700 bg-zinc-800 p-4 sm:p-5 justify-center items-center h-[170px] sm:h-[190px] md:h-[200px] text-center gap-2 shadow-md">
-                          <div className="mb-2">{tool.icon}</div>
-                          <div className="text-base sm:text-lg">{tool.name}</div>
-                          <div className="text-xs sm:text-sm text-zinc-500 leading-snug">
+                        <div className="flex flex-col rounded-2xl border border-t-white/15 border-x-slate-800 border-b-black/80 bg-slate-900/90 p-4 sm:p-5 justify-center items-center h-[170px] sm:h-[190px] md:h-[200px] text-center gap-2 shadow-[0_8px_20px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)] hover:border-cyan-500/50 hover:shadow-[0_12px_28px_rgba(6,182,212,0.25)] hover:-translate-y-1 transition-all duration-300">
+                          <div className="mb-2 transition-transform duration-300 hover:scale-110">{tool.icon}</div>
+                          <div className="text-base sm:text-lg font-bold text-white">{tool.name}</div>
+                          <div className="text-xs sm:text-sm text-slate-400 leading-snug">
                             {tool.content}
                           </div>
                         </div>

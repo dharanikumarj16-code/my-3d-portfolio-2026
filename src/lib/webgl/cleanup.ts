@@ -110,13 +110,9 @@ export function teardownWebGLInstance(
     try {
       renderer.dispose();
       renderer.forceContextLoss();
-      if (renderer.domElement && renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
-      }
     } catch (err) {
       console.warn("Error tearing down WebGLRenderer:", err);
     }
-    (renderer as any).domElement = null;
   }
 }
 

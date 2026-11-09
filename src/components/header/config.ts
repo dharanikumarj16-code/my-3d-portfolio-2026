@@ -16,6 +16,14 @@ const links: EnhancedLink[] = [
     description: "End-to-end machine learning pipelines, voice AI agents, and intelligent software systems.",
   },
   {
+    title: "About",
+    href: "/about",
+    thumbnail: "/assets/dharani-about-avatar.jpg",
+    subtitle: "Background & Philosophy",
+    tag: "Personal",
+    description: "Explore boldly. Build practically. Learn continuously. Future AI entrepreneur.",
+  },
+  {
     title: "Skills",
     href: "/#skills",
     thumbnail: "/assets/dharani-3d-balcony.jpg",
@@ -38,14 +46,6 @@ const links: EnhancedLink[] = [
     subtitle: "Featured AI Systems",
     tag: "Deployments",
     description: "SmartFarm AI (Crop Prediction), Jiniz.ai, Voice Assistant JARVIS, and AutoSilent Pro.",
-  },
-  {
-    title: "About",
-    href: "/about",
-    thumbnail: "/assets/dharani-about-avatar.jpg",
-    subtitle: "Background & Philosophy",
-    tag: "Personal",
-    description: "Explore boldly. Build practically. Learn continuously. Future AI entrepreneur.",
   },
   {
     title: "Resume",

@@ -32,9 +32,25 @@ export const Hero3DProfile: React.FC<Hero3DProfileProps> = ({
     if (!ctx) return;
 
     let animId: number;
+    let isIntersecting = true;
     let W = 0;
     let H = 0;
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    // Pause heavy 3D math and canvas drawing when scrolled out of view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting && !animId) {
+          animId = requestAnimationFrame(renderLoop);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     const updateSize = () => {
       if (!containerRef.current || !canvas) return;
@@ -203,18 +219,24 @@ export const Hero3DProfile: React.FC<Hero3DProfileProps> = ({
         ctx.shadowBlur = 0;
       }
 
+      if (!isIntersecting) {
+        animId = 0;
+        return;
+      }
+
       animId = requestAnimationFrame(renderLoop);
     }
 
     renderLoop();
 
     return () => {
+      observer.disconnect();
       window.removeEventListener("resize", updateSize);
       if (containerEl) {
         containerEl.removeEventListener("mousemove", handlePointerMove);
         containerEl.removeEventListener("mouseleave", handlePointerLeave);
       }
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
     };
   }, []);
 
@@ -225,7 +247,7 @@ export const Hero3DProfile: React.FC<Hero3DProfileProps> = ({
         playPressSound();
         setTimeout(playReleaseSound, 150);
       }}
-      className="relative w-full max-w-[460px] lg:max-w-[500px] aspect-[4/5] sm:aspect-square flex items-center justify-center cursor-pointer select-none perspective-[1000px] overflow-visible"
+      className="relative w-full max-w-[460px] lg:max-w-[500px] min-h-[380px] sm:min-h-[460px] aspect-[4/5] sm:aspect-square flex items-center justify-center cursor-pointer select-none perspective-[1000px] overflow-visible"
     >
       {/* 3D Neural Lines Canvas Background */}
       <canvas
@@ -252,6 +274,7 @@ export const Hero3DProfile: React.FC<Hero3DProfileProps> = ({
             alt="Dharani Kumar J - AI & Data Science Engineer"
             fill
             priority
+            fetchPriority="high"
             onError={() => setImageSrc("/assets/dharani-3d-portrait.jpg")}
             unoptimized={imageSrc.startsWith("http")}
             className="object-cover object-center w-full h-full transition-transform duration-500 group-hover:scale-[1.03]"

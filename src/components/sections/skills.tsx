@@ -179,7 +179,7 @@ const SkillsSection: React.FC = () => {
         )}
 
         {/* Planet Spheres Celestial Stage */}
-        <div className="skills-stage relative w-full pt-4 pb-20 flex flex-col items-center justify-center">
+        <div className="skills-stage relative w-full pt-4 pb-20 flex flex-col items-center justify-center [contain:layout_style]">
           {/* Planet Orbit Rows */}
           <div className="planet-rows w-full">
             <div className="planet-row">

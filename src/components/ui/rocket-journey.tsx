@@ -135,6 +135,9 @@ export const RocketJourney: React.FC = () => {
     let isTabVisible = true;
     const handleVisibilityChange = () => {
       isTabVisible = !document.hidden;
+      if (isTabVisible && !animId) {
+        animId = requestAnimationFrame(render);
+      }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
@@ -160,7 +163,7 @@ export const RocketJourney: React.FC = () => {
 
     const render = () => {
       if (!isTabVisible) {
-        animId = requestAnimationFrame(render);
+        animId = 0;
         return;
       }
 
@@ -338,7 +341,7 @@ export const RocketJourney: React.FC = () => {
       window.removeEventListener("rocket-back-to-top", handleBackToTop);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       mediaQuery.removeEventListener("change", handleReducedMotion);
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
     };
   }, [isReducedMotion, isHovered, isMobile]);
 

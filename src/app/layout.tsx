@@ -62,6 +62,7 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["600", "700"],
   variable: "--font-heading",
   display: "swap",
+  adjustFontFallback: true,
 });
 
 const inter = Inter({
@@ -69,6 +70,7 @@ const inter = Inter({
   weight: ["400", "500", "600"],
   variable: "--font-body",
   display: "swap",
+  adjustFontFallback: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -76,6 +78,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["500"],
   variable: "--font-mono",
   display: "swap",
+  adjustFontFallback: true,
 });
 
 export default function RootLayout({

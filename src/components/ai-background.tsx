@@ -290,7 +290,7 @@ const AIBackground: React.FC = () => {
     let stars: Star[] = [];
     const initStars = () => {
       const area = window.innerWidth * window.innerHeight;
-      const count = Math.min(Math.max(Math.floor(area / 4400), 150), 320);
+      const count = Math.min(Math.max(Math.floor(area / 5800), 110), 200);
       stars = [];
 
       for (let i = 0; i < count; i++) {
@@ -342,9 +342,23 @@ const AIBackground: React.FC = () => {
     };
 
     let time = 0;
+    let isTabVisible = true;
+
+    const handleVisibilityChange = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible && !animationFrameId) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Main 60fps render loop
     const render = () => {
+      if (!isTabVisible) {
+        animationFrameId = 0;
+        return;
+      }
+
       time += 0.016;
 
       ctx.clearRect(0, 0, width, height);
@@ -402,20 +416,25 @@ const AIBackground: React.FC = () => {
       }
 
       // 2. DRAW LIGHT DELICATE CONSTELLATION CONNECTING LINES BETWEEN NEARBY STARS
-      const maxConnectionDist = 95 * dpr;
+      const maxConnectionDist = 90 * dpr;
       for (let i = 0; i < stars.length; i++) {
         const p1 = stars[i];
+        if (p1.depth < 0.35) continue;
         let connections = 0;
 
         for (let j = i + 1; j < stars.length; j++) {
           if (connections >= 2) break; // Light, subtle network density
           const p2 = stars[j];
+          if (p2.depth < 0.35) continue;
 
           // Connect stars that reside in roughly the same 3D depth plane
-          if (Math.abs(p1.depth - p2.depth) > 0.35) continue;
+          if (Math.abs(p1.depth - p2.depth) > 0.32) continue;
 
           const cdx = p1.renderX - p2.renderX;
+          if (Math.abs(cdx) > maxConnectionDist) continue;
           const cdy = p1.renderY - p2.renderY;
+          if (Math.abs(cdy) > maxConnectionDist) continue;
+
           const cdist = Math.hypot(cdx, cdy);
 
           if (cdist < maxConnectionDist) {
@@ -604,11 +623,12 @@ const AIBackground: React.FC = () => {
     render();
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("click", handleClick);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       audioCtxRef.current?.close().catch(() => {});
     };
   }, [isDark]);

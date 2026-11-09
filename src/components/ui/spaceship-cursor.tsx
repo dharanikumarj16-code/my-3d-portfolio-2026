@@ -21,6 +21,10 @@ export const SpaceshipCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
 
+  const isHoveringRef = useRef(false);
+  const isClickingRef = useRef(false);
+  const isVisibleRef = useRef(false);
+
   const pos = useRef({ x: -100, y: -100 });
   const target = useRef({ x: -100, y: -100 });
   const vel = useRef({ x: 0, y: 0 });
@@ -40,7 +44,10 @@ export const SpaceshipCursor: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       target.current.x = e.clientX;
       target.current.y = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        setIsVisible(true);
+      }
 
       // Detect if hovering over clickable elements
       const targetEl = e.target as HTMLElement | null;
@@ -50,14 +57,29 @@ export const SpaceshipCursor: React.FC = () => {
             'a, button, input, textarea, select, label, [role="button"], .planet-orb, .cursor-pointer'
           )
         );
-        setIsHovering(isClickable);
+        if (isHoveringRef.current !== isClickable) {
+          isHoveringRef.current = isClickable;
+          setIsHovering(isClickable);
+        }
       }
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseDown = () => {
+      isClickingRef.current = true;
+      setIsClicking(true);
+    };
+    const handleMouseUp = () => {
+      isClickingRef.current = false;
+      setIsClicking(false);
+    };
+    const handleMouseLeave = () => {
+      isVisibleRef.current = false;
+      setIsVisible(false);
+    };
+    const handleMouseEnter = () => {
+      isVisibleRef.current = true;
+      setIsVisible(true);
+    };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mousedown", handleMouseDown);
@@ -82,8 +104,22 @@ export const SpaceshipCursor: React.FC = () => {
     window.addEventListener("resize", handleResize);
 
     let animId: number;
+    let isTabVisible = true;
+
+    const handleVisibility = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible && !animId) {
+        animId = requestAnimationFrame(renderLoop);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
 
     const renderLoop = () => {
+      if (!isTabVisible) {
+        animId = 0;
+        return;
+      }
+
       // Smooth lerp following mouse
       const dx = target.current.x - pos.current.x;
       const dy = target.current.y - pos.current.y;
@@ -164,15 +200,16 @@ export const SpaceshipCursor: React.FC = () => {
     animId = requestAnimationFrame(renderLoop);
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
     };
-  }, [isVisible, isHovering, isClicking]);
+  }, []);
 
   if (!mounted) return null;
 

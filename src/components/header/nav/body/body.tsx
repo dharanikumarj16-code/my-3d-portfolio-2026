@@ -70,10 +70,9 @@ export default function Body({
   };
 
   return (
-    <div className={cn(styles.body, "flex flex-col items-start")}>
+    <div className={cn(styles.body, "flex flex-col items-end md:flex-row")}>
       {links.map((link, index) => {
         const { title, href, target } = link;
-        const isSelected = selectedLink.isActive && selectedLink.index === index;
 
         return (
           <Link
@@ -81,22 +80,15 @@ export default function Body({
             href={href}
             target={target}
             onClick={(e) => handleLinkClick(e, href)}
-            className="cursor-can-hover group relative flex items-baseline gap-4 py-2 transition-transform duration-200 hover:translate-x-3"
-            onMouseEnter={() => setSelectedLink({ isActive: true, index })}
-            onFocus={() => setSelectedLink({ isActive: true, index })}
+            className="cursor-can-hover rounded-lg"
           >
-            <span className="font-mono text-xs text-cyan-400/70 group-hover:text-cyan-300">
-              0{index + 1}
-            </span>
             <motion.p
               className={cn(
-                "font-heading font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight transition-colors duration-200",
-                isSelected
-                  ? "text-cyan-300 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]"
-                  : currentHref === href
-                    ? "text-white underline underline-offset-8 decoration-cyan-400"
-                    : "text-slate-400 group-hover:text-white"
+                "rounded-lg",
+                currentHref !== href ? "text-muted-foreground" : "underline"
               )}
+              onMouseOver={() => setSelectedLink({ isActive: true, index })}
+              onMouseLeave={() => setSelectedLink({ isActive: false, index })}
               variants={blur}
               animate={
                 selectedLink.isActive && selectedLink.index !== index

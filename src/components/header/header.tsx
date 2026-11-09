@@ -78,11 +78,12 @@ const Header = ({ loader }: HeaderProps) => {
     <>
       <motion.header
         className={cn(
-          "fixed top-0 inset-x-0 w-full z-[1001] px-4 sm:px-6 py-3.5 transition-all duration-300",
-          isActive
-            ? "bg-slate-950/95 border-b border-slate-800/80 shadow-[0_4px_25px_rgba(0,0,0,0.8)]"
-            : "bg-slate-950/70 backdrop-blur-xl border-b border-white/5"
+          styles.header,
+          "transition-colors delay-100 duration-500 ease-in z-[1000]"
         )}
+        style={{
+          background: isActive ? "hsl(var(--background) / .8)" : "transparent",
+        }}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{
@@ -90,12 +91,15 @@ const Header = ({ loader }: HeaderProps) => {
           duration: 0.8,
         }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className={cn(styles.bar, "flex items-center justify-between")}>
           {/* Logo / Brand Name */}
-          <Link href="/" className="flex items-center">
-            <span className="font-heading font-semibold text-sm sm:text-base tracking-[-0.01em] text-white hover:text-cyan-300 transition-colors">
+          <Link href="/" className="flex items-center justify-center">
+            <Button
+              variant={"link"}
+              className="text-md font-heading font-semibold tracking-[-0.01em] hover:no-underline text-foreground"
+            >
               {config.title}
-            </span>
+            </Button>
           </Link>
 
           {/* Desktop Quick Nav 3D Floating Capsule - Matched to Page Order */}
@@ -168,24 +172,25 @@ const Header = ({ loader }: HeaderProps) => {
           </nav>
 
           {/* Right Controls: Theme + Followers + Fullscreen Menu Trigger */}
-          <div className="flex items-center gap-3">
-            <FunnyThemeToggle className="w-6 h-6 flex" />
+          <div className="flex items-center">
+            <FunnyThemeToggle className="w-6 h-6 mr-4 flex" />
             {config.githubUsername && (
-              <div className="hidden sm:block">
-                <GitHubFollowersButton username={config.githubUsername} />
-              </div>
+              <GitHubFollowersButton
+                username={config.githubUsername}
+                className="mr-4"
+              />
             )}
             <Button
               variant={"ghost"}
               onClick={() => setIsActive(!isActive)}
               className={cn(
                 styles.el,
-                "m-0 p-0 h-8 px-3 rounded-xl bg-slate-900/90 border border-t-white/15 border-x-slate-800 border-b-black/80 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] flex items-center justify-center cursor-pointer active:translate-y-0.5",
+                "m-0 p-0 h-8 px-3 rounded-xl bg-slate-900/80 border border-t-white/15 border-x-slate-800 border-b-black/80 shadow-[0_3px_8px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] flex items-center justify-center cursor-pointer active:translate-y-0.5",
                 isActive && "border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.4)]"
               )}
               aria-label={isActive ? "Close Navigation Menu" : "Open Navigation Menu"}
             >
-              <div className="relative hidden md:flex items-center text-xs font-mono font-medium">
+              <div className="relative hidden md:flex items-center">
                 <motion.p variants={opacity} animate={!isActive ? "open" : "closed"}>
                   Menu
                 </motion.p>
@@ -201,37 +206,28 @@ const Header = ({ loader }: HeaderProps) => {
             </Button>
           </div>
         </div>
+
+        {/* Fullscreen Backdrop Blur Overlay on all layers */}
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              onClick={() => setIsActive(false)}
+              className="fixed inset-0 w-screen h-[100dvh] bg-slate-950/92 backdrop-blur-3xl z-[-1] cursor-pointer"
+              style={{ WebkitBackdropFilter: "blur(28px)" }}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Original Menu Layout */}
+        <AnimatePresence mode="wait">
+          {isActive && <Nav setIsActive={setIsActive} />}
+        </AnimatePresence>
       </motion.header>
-
-      {/* Fullscreen Backdrop Blur Overlay (Blocks and heavily blurs webpage behind menu) */}
-      <AnimatePresence>
-        {isActive && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={() => setIsActive(false)}
-            className="fixed inset-0 w-screen h-[100dvh] bg-slate-950/94 backdrop-blur-3xl z-[999] cursor-pointer"
-            aria-hidden="true"
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Fullscreen Navigation Modal Container */}
-      <AnimatePresence mode="wait">
-        {isActive && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[68px] z-[1000] flex flex-col justify-center overflow-y-auto px-6 sm:px-12 md:px-20 py-8 pointer-events-auto"
-          >
-            <Nav setIsActive={setIsActive} />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };
